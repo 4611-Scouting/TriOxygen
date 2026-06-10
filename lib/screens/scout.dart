@@ -18,18 +18,28 @@ class FirstPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text('First Page'),
+          child: Text('First Page')
         ),
+        SizedBox(height: 200, width: 400, child:
         TextFormField(
+          textAlign: TextAlign.center,
+          textAlignVertical: TextAlignVertical.center,
           controller: controller,
           decoration: InputDecoration(
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(horizontal: 2, vertical: 12),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Enter your name',
               label: Text('Name'),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(width: 1,color: Colors.blue)
             )
           ),
         ),
+        ),
+      Image.asset("assets/images/FieldImage.png"),
       ],
     );
   }
