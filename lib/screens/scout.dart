@@ -2,6 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:trioxygen/screens/data.dart' show DataView;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
+
+// Source - https://stackoverflow.com/a/77998235
+// Posted by A-E, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-06-09, License - CC BY-SA 4.0
+
+class FirstPage extends StatelessWidget {
+
+  static var controller = TextEditingController();
+  const FirstPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text('First Page'),
+        ),
+        TextFormField(
+          controller: controller,
+          decoration: InputDecoration(
+              label: Text('Name'),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(width: 1,color: Colors.blue)
+            )
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class Scout extends StatelessWidget {
   const Scout({super.key});
 
@@ -10,13 +43,36 @@ class Scout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Scout'),
+    
       leading: Builder(builder: (context){
         return IconButton(onPressed: () {
           Scaffold.of(context).openDrawer();
         }, icon: const Icon(Icons.menu));
       }),
       ),
-      body: Center(child: Text('Scout')),
+      body: MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+          ),
+          body: const TabBarView(
+            children: [
+              FirstPage(),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
+      ),
+    ),
       drawer: Drawer(child: ListView(
         padding: EdgeInsets.zero,
         children: [ListTile(
