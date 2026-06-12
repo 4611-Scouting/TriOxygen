@@ -3,47 +3,9 @@ import 'package:trioxygen/screens/data.dart' show DataView;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
 
-// Source - https://stackoverflow.com/a/77998235
-// Posted by A-E, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-06-09, License - CC BY-SA 4.0
+import 'package:trioxygen/screens/scout_pages/team_entry.dart' show TeamEntry;
 
-class FirstPage extends StatelessWidget {
 
-  static var controller = TextEditingController();
-  const FirstPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('First Page')
-        ),
-        SizedBox(height: 200, width: 400, child:
-        TextFormField(
-          textAlign: TextAlign.center,
-          textAlignVertical: TextAlignVertical.center,
-          controller: controller,
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(horizontal: 2, vertical: 12),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: 'Enter your name',
-              label: Text('Name'),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
-              borderSide: BorderSide(width: 1,color: Colors.blue)
-            )
-          ),
-        ),
-        ),
-      Image.asset("assets/images/FieldImage.png"),
-      ],
-    );
-  }
-}
 
 class Scout extends StatelessWidget {
   const Scout({super.key});
@@ -75,7 +37,7 @@ class Scout extends StatelessWidget {
           ),
           body: const TabBarView(
             children: [
-              FirstPage(),
+              TeamEntry(),
               Icon(Icons.directions_transit),
               Icon(Icons.directions_bike),
             ],
