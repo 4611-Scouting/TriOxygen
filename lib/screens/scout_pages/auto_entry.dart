@@ -24,44 +24,49 @@ class _AutonPageState extends State<AutonPage> {
         SizedBox(height: 200, width: 400, child:
         Image.asset("assets/images/FieldImage.png")
         ),
+        SizedBox(width: 500,
+         child: Column(
+          children: [
         CheckboxListTile(
-          title: Text("Pickup from Depot"),
-          value: isChecked1,
-          onChanged: (newBool) {
-            setState(() {
-              isChecked1 = newBool;
-            });
-          },
-        ),
-        CheckboxListTile(
-            title: Text("Pickup from Outpost"),
-            value: isChecked2,
+            title: Text("Pickup from Depot"),
+            value: isChecked1,
             onChanged: (newBool) {
               setState(() {
-                isChecked2 = newBool;
+                isChecked1 = newBool;
               });
             },
-          ),      
-        CheckboxListTile(
-              title: Text("Pickup from Neutral Zone"),
-              value: isChecked3,
+          ),
+          CheckboxListTile(
+              title: Text("Pickup from Outpost"),
+              value: isChecked2,
               onChanged: (newBool) {
                 setState(() {
-                  isChecked3 = newBool;
+                  isChecked2 = newBool;
                 });
               },
-            ),
-        CheckboxListTile(
-                title: Text("Crossed Midline"),
-                value: isChecked4,
+            ),      
+          CheckboxListTile(
+                title: Text("Pickup from Neutral Zone"),
+                value: isChecked3,
                 onChanged: (newBool) {
                   setState(() {
-                    isChecked4 = newBool;
+                    isChecked3 = newBool;
                   });
                 },
-              )
-      ]
+              ),
+          CheckboxListTile(
+                  title: Text("Crossed Midline"),
+                  value: isChecked4,
+                  onChanged: (newBool) {
+                    setState(() {
+                      isChecked4 = newBool;
+                    });
+                  },
+                ),
+          ],
+          ),
+        ),
+      ],
     );
-      
   }
-}
+}    
