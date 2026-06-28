@@ -15,11 +15,14 @@ class _EndgameEntryState extends State<EndgameEntry> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
+      padding: const EdgeInsets.all(20.0),
+      child: 
+      Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center, // Keeps the button row from expanding to full screen width
         children: [
+          const Text("Endgame"),
+          const SizedBox(height: 16.0),
           SegmentedButton<ClimbLevel>(
             showSelectedIcon: false,
             style: SegmentedButton.styleFrom(
@@ -57,6 +60,14 @@ class _EndgameEntryState extends State<EndgameEntry> {
               });
             },
           ),
+          SizedBox(height: 20.0),
+          TextButton(style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+          ), onPressed: () {
+            Text("Submitted!");
+          }, child: const Text("Submit")),
+
         ],
       ),
     );
