@@ -250,7 +250,10 @@ class TeamEntryState extends State<TeamEntry> {
         ],)),SizedBox(width: 200, height: 200, child: GestureDetector(
         onTapDown: (details) =>  onTapDown(context, details),
         child: Stack(children: [Transform.flip(flipX: flip, child: Image.asset("assets/images/FieldImage.png", fit: BoxFit.cover,)), ?_children])
-      ),)])),
+      ),
+      )]
+      )
+      ),
       ],
     ))]));
   }

@@ -62,8 +62,8 @@ class _EndgameEntryState extends State<EndgameEntry> {
           ),
           SizedBox(height: 20.0),
           TextButton(style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+            foregroundColor: WidgetStateProperty.all<Color>(Colors.black),
           ), onPressed: () {
             Text("Submitted!");
           }, child: const Text("Submit")),
