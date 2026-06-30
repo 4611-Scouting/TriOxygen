@@ -47,6 +47,8 @@ class AutonPage extends StatefulWidget {
   State<AutonPage> createState() => _AutonPageState();
 }
 
+enum ClimbLevel { Level1, Level2, Level3, Attempted, NotAttempted }
+
 class _AutonPageState extends State<AutonPage> {
     void onTapDown(BuildContext context, TapDownDetails details) {
     print('ran2');
@@ -118,7 +120,8 @@ class _AutonPageState extends State<AutonPage> {
          )),],),
         SizedBox(width: 500,
          child: Column(
-          children: [
+          children: 
+          [
         CheckboxListTile(
             title: Text("Pickup from Depot"),
             value: isChecked1,
