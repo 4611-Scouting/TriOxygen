@@ -161,10 +161,6 @@ class TeamEntryState extends State<TeamEntry> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(child: Stack(children: [Center(child: Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('Pre-Match')
-        ),
         Padding(padding: const EdgeInsets.all(16.0), child: Column(children: [Text('Match Level'),
         SingleChoiceMatchLevel(),],)),
         Padding(padding: const EdgeInsets.all(16.0), child: SizedBox(height: 50, width: 400, child:

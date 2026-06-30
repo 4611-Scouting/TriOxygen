@@ -1,53 +1,13 @@
 import 'package:flutter/material.dart';
-enum SingingCharacter {NoAttempt, Attempted, Successful}
-
-class RadioExample extends StatefulWidget {
-  const RadioExample({super.key});
-
-  @override
-  State<RadioExample> createState() => _RadioExampleState();
-}
-
-class _RadioExampleState extends State<RadioExample> {
-  SingingCharacter? _character = .NoAttempt;
-
-  @override
-  Widget build(BuildContext context) {
-    return RadioGroup<SingingCharacter>(
-      groupValue: _character,
-      onChanged: (SingingCharacter? value) {
-        setState(() {
-          _character = value;
-        });
-      },
-      child: const Column(
-
-        children: <Widget>[
-          ListTile(
-            title: Text('Not Attempted'),
-            leading: Radio<SingingCharacter>(value: SingingCharacter.NoAttempt),
-          ),
-          ListTile(
-            title: Text('Attempted'),
-            leading: Radio<SingingCharacter>(value: SingingCharacter.Attempted),
-          ),
-          ListTile(
-            title: Text('Successful'),
-            leading: Radio<SingingCharacter>(value: SingingCharacter.Successful),
-          ),
-        ],
-      ),
-    );
-  }}
-class AutonPage extends StatefulWidget {
+class TeleopPage extends StatefulWidget {
   static var controller = TextEditingController();
-  const AutonPage({super.key});
+  const TeleopPage({super.key});
 
   @override
-  State<AutonPage> createState() => _AutonPageState();
+  State<TeleopPage> createState() => _TeleopPageState();
 }
 
-class _AutonPageState extends State<AutonPage> {
+class _TeleopPageState extends State<TeleopPage> {
     void onTapDown(BuildContext context, TapDownDetails details) {
     print('ran2');
     final Offset localOffset = details.localPosition;
@@ -61,7 +21,10 @@ class _AutonPageState extends State<AutonPage> {
   bool? isChecked1 = false
   , isChecked2 = false
   , isChecked3 = false
-  , isChecked4 = false;
+  , isChecked4 = false
+  , isChecked5 = false
+  , isChecked6 = false
+  , isChecked7 = false;
     
   List<Widget?> _children = [];
   bool flip = false;
@@ -76,11 +39,10 @@ class _AutonPageState extends State<AutonPage> {
       return goodWidgets;
     }
   }
-  
   Widget build(BuildContext context) {
     return SingleChildScrollView(child: Column(
       children: [
-      Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Auto Shooting Locations'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+      Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Shooting Locations'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
           ElevatedButton(onPressed: () => setState(() {
             try {
             _children.removeAt(_children.length - 1);
@@ -108,14 +70,6 @@ class _AutonPageState extends State<AutonPage> {
         ...fixthedisplay(_children)
         ]),
       ),)])),
-      
-      Column(
-        children: [Padding(padding: const EdgeInsets.all(16.0), child: Text('Climb', style: TextStyle(fontSize: 20),)),Center(child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxWidth: 510,
-        ),
-        child: Center(child: RadioExample())
-         )),],),
         SizedBox(width: 500,
          child: Column(
           children: [
@@ -147,11 +101,38 @@ class _AutonPageState extends State<AutonPage> {
                 },
               ),
           CheckboxListTile(
-                  title: Text("Crossed Midline"),
+                  title: Text("Passed from Opp Alliance Zone Full Field"),
                   value: isChecked4,
                   onChanged: (newBool) {
                     setState(() {
                       isChecked4 = newBool;
+                    });
+                  },
+                ),
+          CheckboxListTile(
+                  title: Text("Passed from Opp Alliance Zone Full Field"),
+                  value: isChecked5,
+                  onChanged: (newBool) {
+                    setState(() {
+                      isChecked5 = newBool;
+                    });
+                  },
+                ),
+          CheckboxListTile(
+                  title: Text("Crossed Bump"),
+                  value: isChecked6,
+                  onChanged: (newBool) {
+                    setState(() {
+                      isChecked6 = newBool;
+                    });
+                  },
+                ),
+          CheckboxListTile(
+                  title: Text("Crossed Trench"),
+                  value: isChecked7,
+                  onChanged: (newBool) {
+                    setState(() {
+                      isChecked7 = newBool;
                     });
                   },
                 ),

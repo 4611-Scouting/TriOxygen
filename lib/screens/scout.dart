@@ -5,6 +5,7 @@ import 'package:trioxygen/screens/settings.dart' show Settings;
 
 import 'package:trioxygen/screens/scout_pages/team_entry.dart' show TeamEntry;
 import 'package:trioxygen/screens/scout_pages/auto_entry.dart' show AutonPage;
+import 'package:trioxygen/screens/scout_pages/teleop_entry.dart' show TeleopPage;
 
 class Scout extends StatelessWidget {
   const Scout({super.key});
@@ -23,14 +24,16 @@ class Scout extends StatelessWidget {
       ),
       body: MaterialApp(
       home: DefaultTabController(
-        length: 3,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(
               tabs: [
                 Tab(text: "Pre-Match",),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
+                Tab(text: "Auton"),
+                Tab(text: "TeleOp"),
+                Tab(text: "Endgame",),
+                Tab(text: "Submit",)
               ],
             ),
           ),
@@ -38,7 +41,7 @@ class Scout extends StatelessWidget {
             children: [
               TeamEntry(),
               AutonPage(),
-              Icon(Icons.directions_bike),
+              TeleopPage(),
             ],
           ),
         ),
