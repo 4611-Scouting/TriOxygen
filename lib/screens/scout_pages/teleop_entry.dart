@@ -40,7 +40,7 @@ class _TeleopPageState extends State<TeleopPage> {
     }
   }
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: Column(
+    return SafeArea(child: SingleChildScrollView(child: Column(
       children: [
       Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Shooting Locations'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
           ElevatedButton(onPressed: () => setState(() {
@@ -140,6 +140,6 @@ class _TeleopPageState extends State<TeleopPage> {
           ),
         ),
       ],
-    ));
+    )));
   }
 }    

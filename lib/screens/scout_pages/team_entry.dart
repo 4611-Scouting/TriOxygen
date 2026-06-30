@@ -159,7 +159,7 @@ class TeamEntryState extends State<TeamEntry> {
   double? dy;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: Stack(children: [Center(child: Column(
+    return SafeArea(child:SingleChildScrollView(child: Stack(children: [Center(child: Column(
       children: [
         Padding(padding: const EdgeInsets.all(16.0), child: Column(children: [Text('Match Level'),
         SingleChoiceMatchLevel(),],)),
@@ -251,7 +251,7 @@ class TeamEntryState extends State<TeamEntry> {
       )
       ),
       ],
-    ))]));
+    ))])));
   }
 }
 
