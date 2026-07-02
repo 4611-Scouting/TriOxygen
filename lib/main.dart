@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trioxygen/screens/scout.dart' show Scout;
+import 'package:trioxygen/screens/match_scout.dart' show MatchScout;
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: appTitle,
-      home: Scout(),
+      home: MatchScout(),
     );
   }
 }

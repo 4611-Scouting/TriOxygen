@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trioxygen/screens/scout.dart' show Scout;
+import 'package:trioxygen/screens/match_scout.dart' show MatchScout;
+import 'package:trioxygen/screens/pit_scout.dart' show PitScout;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
 class DataView extends StatelessWidget {
@@ -25,7 +26,19 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Scout(),
+                builder: (context) => const MatchScout(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: const Text("Pit Scout"),
+          onTap: (){
+          Navigator.pop(context);
+          Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (context) => const DataView(),
               ),
             );
           },
