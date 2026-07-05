@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:trioxygen/count.dart' show CounterProvider;
 class TeamEntry extends StatefulWidget {
   const TeamEntry({super.key});
 
@@ -140,6 +142,7 @@ class _SingleChoiceState extends State<SingleChoice> {
   }
 }
 class TeamEntryState extends State<TeamEntry> {
+    late TextEditingController controller;
     void onTapDown(BuildContext context, TapDownDetails details) {
     final Offset localOffset = details.localPosition;
     dx = localOffset.dx;
@@ -150,7 +153,7 @@ class TeamEntryState extends State<TeamEntry> {
     });
   }
 
-  static var controller = TextEditingController();
+
   static var matchController = TextEditingController();
   static var teamNumberController = TextEditingController();
   Widget? _children;
@@ -158,7 +161,19 @@ class TeamEntryState extends State<TeamEntry> {
   double? dx;
   double? dy;
   @override
+  void initState() {
+    super.initState();
+    final counter = context.read<CounterProvider>();
+    controller = TextEditingController();
+    controller.text = counter.count;
+    controller.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateSomeValue(controller.text);
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+      //controller.text = counter.count;
     return SafeArea(child:SingleChildScrollView(child: Stack(children: [Center(child: Column(
       children: [
         Padding(padding: const EdgeInsets.all(16.0), child: Column(children: [Text('Match Level'),

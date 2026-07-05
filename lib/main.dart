@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:trioxygen/screens/scout.dart' show Scout;
-void main() => runApp(const MyApp());
+import 'package:trioxygen/count.dart' show CounterProvider;
+import 'package:provider/provider.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CounterProvider(),
+      child: const MyApp(),
+    ),
+  );
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
