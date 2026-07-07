@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:trioxygen/count.dart' show CounterProvider;
+import 'package:trioxygen/state.dart' show CounterProvider, RobotPosition, MatchLevel;
 class TeamEntry extends StatefulWidget {
   const TeamEntry({super.key});
 
@@ -11,7 +11,6 @@ class TeamEntry extends StatefulWidget {
     return TeamEntryState();
   }
 }
-enum MatchLevel {Practice, Quals, Playoffs}
 
 class SingleChoiceMatchLevel extends StatefulWidget {
   const SingleChoiceMatchLevel({super.key});
@@ -21,10 +20,11 @@ class SingleChoiceMatchLevel extends StatefulWidget {
 }
 
 class _SingleChoiceMatchLevelState extends State<SingleChoiceMatchLevel> {
-  MatchLevel MatchLevelView = MatchLevel.Practice;
+  
 
   @override
   Widget build(BuildContext context) {
+    MatchLevel MatchLevelView = context.read<CounterProvider>().matchLevel;
     return SegmentedButton<MatchLevel>(
         showSelectedIcon: false,
         style: SegmentedButton.styleFrom(
@@ -55,12 +55,12 @@ class _SingleChoiceMatchLevelState extends State<SingleChoiceMatchLevel> {
           // selected at one time, so its value is always the first
           // item in the selected set.
           MatchLevelView = newSelection.first;
+          context.read<CounterProvider>().updateMatchLevel(newSelection.first);
         });
       },
     );
   }
 }
-enum RobotPosition { Red1, Red2, Red3, Blue1, Blue2, Blue3}
 
 class SingleChoice extends StatefulWidget {
   const SingleChoice({super.key});
@@ -70,10 +70,10 @@ class SingleChoice extends StatefulWidget {
 }
 
 class _SingleChoiceState extends State<SingleChoice> {
-  RobotPosition RobotPositionView = .Red1;
 
   @override
   Widget build(BuildContext context) {
+    RobotPosition RobotPositionView = context.read<CounterProvider>().robotPosition;
     return Column(children: [SegmentedButton<RobotPosition>(
         showSelectedIcon: false,
         style: SegmentedButton.styleFrom(
@@ -104,6 +104,8 @@ class _SingleChoiceState extends State<SingleChoice> {
           // selected at one time, so its value is always the first
           // item in the selected set.
           RobotPositionView = newSelection.first;
+          context.read<CounterProvider>().robotPositionUpdate(newSelection.first);
+
         });
       },
     ), SegmentedButton<RobotPosition>(
@@ -136,6 +138,8 @@ class _SingleChoiceState extends State<SingleChoice> {
           // selected at one time, so its value is always the first
           // item in the selected set.
           RobotPositionView = newSelection.first;
+          context.read<CounterProvider>().robotPositionUpdate(newSelection.first);
+          
         });
       },
     )]);
@@ -146,18 +150,28 @@ class TeamEntryState extends State<TeamEntry> {
     void onTapDown(BuildContext context, TapDownDetails details) {
     final Offset localOffset = details.localPosition;
     dx = localOffset.dx;
-    dy = localOffset.dy; 
+    dy = localOffset.dy;
+    context.read<CounterProvider>().updateDeezNutz(dx,dy);
+    setState(() {
+      
+      _children = (Positioned(left: dx , top: dy, child: Container(width: 10, height: 10, decoration: const BoxDecoration(
+            color: Colors.red, shape: BoxShape.circle),),));
+    });
+    
+  }
+    void onForce() { 
     setState(() {
       _children = (Positioned(left: dx , top: dy, child: Container(width: 10, height: 10, decoration: const BoxDecoration(
             color: Colors.red, shape: BoxShape.circle),),));
     });
+    
   }
 
 
-  static var matchController = TextEditingController();
-  static var teamNumberController = TextEditingController();
+  late TextEditingController matchController ;
+  late TextEditingController teamNumberController;
   Widget? _children;
-  bool flip = false;
+  late bool flip;
   double? dx;
   double? dy;
   @override
@@ -165,14 +179,36 @@ class TeamEntryState extends State<TeamEntry> {
     super.initState();
     final counter = context.read<CounterProvider>();
     controller = TextEditingController();
-    controller.text = counter.count;
+    matchController = TextEditingController();
+    teamNumberController = TextEditingController();
+    flip = counter.flip;
+
+    controller.text = counter.userName;
+    matchController.text = counter.matchNumber;
+    teamNumberController.text = counter.teamNumber;
     controller.addListener(() {
         Provider.of<CounterProvider>(context, listen: false)
             .updateSomeValue(controller.text);
     });
+    matchController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateMatchNumber(matchController.text);
+    });
+    teamNumberController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateTeamNumber(teamNumberController.text);
+    });
+
+    if (counter.dx != null){
+      dx = counter.dx;
+      dy = counter.dy;
+    }
   }
   @override
   Widget build(BuildContext context) {
+      if (dx != null){
+        onForce();
+      }
       //controller.text = counter.count;
     return SafeArea(child:SingleChildScrollView(child: Stack(children: [Center(child: Column(
       children: [
@@ -247,10 +283,16 @@ class TeamEntryState extends State<TeamEntry> {
         SingleChoice(),],), ),
       Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Auton Starting Position'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
           ElevatedButton(onPressed: () => setState(() {
+            context.read<CounterProvider>().updateDeezNutz(null,null);
+            dx = null;
+            dy = null;
             _children = null;
+            
+        
           }), child: Text('Delete')),
           ElevatedButton(onPressed: () => setState(() {
             flip = !flip;
+            context.read<CounterProvider>().flipfunc();
             if (dx != null){
               dx = 200-dx!;
               _children = (Positioned(left: dx , top: dy, child: Container(width: 10, height: 10, decoration: const BoxDecoration(

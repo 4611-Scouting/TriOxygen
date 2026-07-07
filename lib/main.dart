@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trioxygen/screens/scout.dart' show Scout;
-import 'package:trioxygen/count.dart' show CounterProvider;
+import 'package:trioxygen/screens/match_scout.dart' show MatchScout;
+import 'package:trioxygen/state.dart' show CounterProvider;
 import 'package:provider/provider.dart';
 
 void main() {
