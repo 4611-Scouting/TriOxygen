@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trioxygen/state.dart' show CounterProvider, SingingCharacter;
 // Source - https://stackoverflow.com/a/77882280
 // Posted by Mehran Ullah
 // Retrieved 2026-06-30, License - CC BY-SA 4.0
@@ -22,7 +24,7 @@ class _MyStopwatchState extends State<MyStopwatch> {
   void initState() {
     super.initState();
 
-    _elapsedTime = Duration.zero;
+    _elapsedTime =  context.read<CounterProvider>().elapsedTimeAuton;
     _elapsedTimeString = _formatElapsedTime(_elapsedTime);
 
     // Create a timer that runs a callback every 100 milliseconds to update UI
@@ -59,6 +61,7 @@ class _MyStopwatchState extends State<MyStopwatch> {
   void _updateElapsedTime() {
     setState(() {
       _elapsedTime = _stopwatch.elapsed;
+       context.read<CounterProvider>().updateAutonTimer(_elapsedTime);
       _elapsedTimeString = _formatElapsedTime(_elapsedTime);
     });
   }
@@ -110,7 +113,6 @@ class _MyStopwatchState extends State<MyStopwatch> {
   }
 }
 
-enum SingingCharacter {NoAttempt, Attempted, Successful}
 
 class RadioExample extends StatefulWidget {
   const RadioExample({super.key});
@@ -120,8 +122,12 @@ class RadioExample extends StatefulWidget {
 }
 
 class _RadioExampleState extends State<RadioExample> {
-  SingingCharacter? _character = .NoAttempt;
-
+  SingingCharacter? _character;
+  @override
+    void initState() {
+    super.initState();
+    _character = context.read<CounterProvider>().autonClimb;
+    }
   @override
   Widget build(BuildContext context) {
     return RadioGroup<SingingCharacter>(
@@ -129,6 +135,7 @@ class _RadioExampleState extends State<RadioExample> {
       onChanged: (SingingCharacter? value) {
         setState(() {
           _character = value;
+          context.read<CounterProvider>().updateAutonClimbSelect(value);
         });
       },
       child: const Column(
@@ -171,25 +178,44 @@ class _AutonPageState extends State<AutonPage> {
             color: Colors.red, shape: BoxShape.circle),),));
     });
   }
-  bool? isChecked1 = false
-  , isChecked2 = false
-  , isChecked3 = false
-  , isChecked4 = false;
+  late bool? isChecked1
+  , isChecked2
+  , isChecked3
+  , isChecked4;
     
-  List<Widget?> _children = [];
-  bool flip = false;
-  List<double?> dx = [];
-  List<double?> dy = [];
+  late List<Widget?> _children;
+  late bool flip;
+  late List<double?> dx;
+  late List<double?> dy;
   List<Widget> fixthedisplay(List<Widget?> widgets ){
     if (widgets.isNotEmpty){
       List<Widget> goodWidgets = List.from(widgets);
+      dx = List.from(dx);
+      dy = List.from(dy);
+      _children = goodWidgets;
+      context.read<CounterProvider>().updateAutonChildren(_children, dx, dy);
       return goodWidgets;
     } else {
       List<Widget> goodWidgets = [];
+      dx = [];
+      dy = [];
+      _children = [];
+      context.read<CounterProvider>().updateAutonChildren(_children, dx, dy);
       return goodWidgets;
     }
   }
-  
+  void initState() {
+    super.initState();
+    isChecked1 = context.read<CounterProvider>().isCheckedAuton[0];
+    isChecked2 = context.read<CounterProvider>().isCheckedAuton[1];
+    isChecked3 = context.read<CounterProvider>().isCheckedAuton[2];
+    isChecked4 = context.read<CounterProvider>().isCheckedAuton[3];
+
+    _children = context.read<CounterProvider>().autonChildren;
+    dx = context.read<CounterProvider>().dxAuton;
+    dy = context.read<CounterProvider>().dyAuton;
+    flip = context.read<CounterProvider>().autonFlip;
+  }
   Widget build(BuildContext context) {
     return SafeArea(child: SingleChildScrollView(child: Column(
       children: [
@@ -199,6 +225,7 @@ class _AutonPageState extends State<AutonPage> {
             _children.removeAt(_children.length - 1);
             dx.removeAt(dx.length - 1);
             dy.removeAt(dy.length  -1);
+            context.read<CounterProvider>().updateAutonChildren(_children, dx, dy);
             } catch (e){
               print('whoops');
             }
@@ -211,6 +238,7 @@ class _AutonPageState extends State<AutonPage> {
               _children[i] = (Positioned(left: dx[i] , top: dy[i], child: Container(width: 10, height: 10, decoration: const BoxDecoration(
             color: Colors.red, shape: BoxShape.circle),),));
               }
+              context.read<CounterProvider>().updateAutonChildren(_children, dx, dy);
 
             } 
 
@@ -241,6 +269,7 @@ class _AutonPageState extends State<AutonPage> {
             onChanged: (newBool) {
               setState(() {
                 isChecked1 = newBool;
+                context.read<CounterProvider>().updateAutonChecked(newBool, 0);
               });
             },
           ),
@@ -250,6 +279,7 @@ class _AutonPageState extends State<AutonPage> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked2 = newBool;
+                  context.read<CounterProvider>().updateAutonChecked(newBool, 1);
                 });
               },
             ),      
@@ -259,6 +289,7 @@ class _AutonPageState extends State<AutonPage> {
                 onChanged: (newBool) {
                   setState(() {
                     isChecked3 = newBool;
+                    context.read<CounterProvider>().updateAutonChecked(newBool, 2);
                   });
                 },
               ),
@@ -268,6 +299,7 @@ class _AutonPageState extends State<AutonPage> {
                   onChanged: (newBool) {
                     setState(() {
                       isChecked4 = newBool;
+                      context.read<CounterProvider>().updateAutonChecked(newBool, 3);
                     });
                   },
                 ),
