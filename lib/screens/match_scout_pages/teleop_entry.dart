@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trioxygen/state.dart';
 class TeleopPage extends StatefulWidget {
   static var controller = TextEditingController();
   const TeleopPage({super.key});
@@ -18,36 +20,65 @@ class _TeleopPageState extends State<TeleopPage> {
             color: Colors.red, shape: BoxShape.circle),),));
     });
   }
-  bool? isChecked1 = false
-  , isChecked2 = false
-  , isChecked3 = false
-  , isChecked4 = false
-  , isChecked5 = false
-  , isChecked6 = false
-  , isChecked7 = false;
-    
-  List<Widget?> _children = [];
-  bool flip = false;
-  List<double?> dx = [];
-  List<double?> dy = [];
+  late bool? isChecked1
+  , isChecked2
+  , isChecked3
+  , isChecked4
+  , isChecked5
+  , isChecked6
+  , isChecked7;
+      
+  late List<Widget?> _children;
+  late bool flip;
+  late List<double?> dx;
+  late List<double?> dy;
+  @override
+    void initState() {
+    super.initState();
+
+    isChecked1 = context.read<CounterProvider>().isCheckedTeleop[0];
+    isChecked2 = context.read<CounterProvider>().isCheckedTeleop[1];
+    isChecked3 = context.read<CounterProvider>().isCheckedTeleop[2];
+    isChecked4 = context.read<CounterProvider>().isCheckedTeleop[3];
+    isChecked5 = context.read<CounterProvider>().isCheckedTeleop[4];
+    isChecked6 = context.read<CounterProvider>().isCheckedTeleop[5];
+    isChecked7 = context.read<CounterProvider>().isCheckedTeleop[6];
+
+    _children = context.read<CounterProvider>().teleopChildren;
+    dx = context.read<CounterProvider>().dxTeleop;
+    dy = context.read<CounterProvider>().dyTeleop;
+    flip = context.read<CounterProvider>().teleopFlip;
+
+  }
+
   List<Widget> fixthedisplay(List<Widget?> widgets ){
     if (widgets.isNotEmpty){
       List<Widget> goodWidgets = List.from(widgets);
+      dx = List.from(dx);
+      dy = List.from(dy);
+      _children = goodWidgets;
+      context.read<CounterProvider>().updateTeleopChildren(_children, dx, dy);
       return goodWidgets;
     } else {
       List<Widget> goodWidgets = [];
+      dx = [];
+      dy = [];
+      _children = [];
+      context.read<CounterProvider>().updateTeleopChildren(_children, dx, dy);
       return goodWidgets;
     }
-  }
+    }
+      @override
   Widget build(BuildContext context) {
     return SafeArea(child: SingleChildScrollView(child: Column(
       children: [
-      Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Shooting Locations'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
+Padding(padding: const EdgeInsets.all(16.0), child:Column(children: [Text('Shooting Locations'),Padding(padding: const EdgeInsets.all(16.0), child: Row(mainAxisAlignment: MainAxisAlignment.center,children: [
           ElevatedButton(onPressed: () => setState(() {
             try {
             _children.removeAt(_children.length - 1);
             dx.removeAt(dx.length - 1);
             dy.removeAt(dy.length  -1);
+            context.read<CounterProvider>().updateTeleopChildren(_children, dx, dy);
             } catch (e){
               print('whoops');
             }
@@ -60,6 +91,7 @@ class _TeleopPageState extends State<TeleopPage> {
               _children[i] = (Positioned(left: dx[i] , top: dy[i], child: Container(width: 10, height: 10, decoration: const BoxDecoration(
             color: Colors.red, shape: BoxShape.circle),),));
               }
+              context.read<CounterProvider>().updateTeleopChildren(_children, dx, dy);
 
             } 
 
@@ -79,6 +111,7 @@ class _TeleopPageState extends State<TeleopPage> {
             onChanged: (newBool) {
               setState(() {
                 isChecked1 = newBool;
+                context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 0);
               });
             },
           ),
@@ -88,6 +121,7 @@ class _TeleopPageState extends State<TeleopPage> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked2 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 1);
                 });
               },
             ),      
@@ -97,6 +131,7 @@ class _TeleopPageState extends State<TeleopPage> {
                 onChanged: (newBool) {
                   setState(() {
                     isChecked3 = newBool;
+                    context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 2);
                   });
                 },
               ),
@@ -106,6 +141,7 @@ class _TeleopPageState extends State<TeleopPage> {
                   onChanged: (newBool) {
                     setState(() {
                       isChecked4 = newBool;
+                      context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 3);
                     });
                   },
                 ),
@@ -115,6 +151,7 @@ class _TeleopPageState extends State<TeleopPage> {
                   onChanged: (newBool) {
                     setState(() {
                       isChecked5 = newBool;
+                      context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 4);
                     });
                   },
                 ),
@@ -124,6 +161,7 @@ class _TeleopPageState extends State<TeleopPage> {
                   onChanged: (newBool) {
                     setState(() {
                       isChecked6 = newBool;
+                      context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 5);
                     });
                   },
                 ),
@@ -133,6 +171,7 @@ class _TeleopPageState extends State<TeleopPage> {
                   onChanged: (newBool) {
                     setState(() {
                       isChecked7 = newBool;
+                      context.read<CounterProvider>().updateIsCheckedTeleop(newBool, 6);
                     });
                   },
                 ),
@@ -142,4 +181,6 @@ class _TeleopPageState extends State<TeleopPage> {
       ],
     )));
   }
-}    
+  }
+
+   

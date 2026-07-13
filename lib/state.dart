@@ -4,6 +4,7 @@ import 'dart:async';
 enum RobotPosition { Red1, Red2, Red3, Blue1, Blue2, Blue3}
 enum MatchLevel {Practice, Quals, Playoffs}
 enum SingingCharacter {NoAttempt, Attempted, Successful}
+enum ClimbLevel { Level1, Level2, Level3, Attempted, NotAttempted }
 class CounterProvider extends ChangeNotifier {
   String _userName = '';
   String _matchNumber = '';
@@ -82,4 +83,43 @@ class CounterProvider extends ChangeNotifier {
   void updateAutonFlip(bool input){
     _autonFlip = input;
   }
+// BELOW IS TELEOP STUFF ANI DONT BE MAD
+
+  List<bool?> _isCheckedTeleop = [false, false, false, false, false, false, false];
+  List<Widget?> _teleopChildren = [];
+  List<double?> _dxTeleop = [];
+  List<double?> _dyTeleop = [];
+  bool _teleopFlip = false;
+
+  List<bool?> get isCheckedTeleop => _isCheckedTeleop;
+  List<Widget?> get teleopChildren => _teleopChildren;
+  List<double?> get dxTeleop => _dxTeleop;
+  List<double?> get dyTeleop => _dyTeleop;
+  bool get teleopFlip => _teleopFlip;
+
+  void updateIsCheckedTeleop(bool? input, int index){
+    _isCheckedTeleop[index] = input;
+  }
+  void updateTeleopChildren(List<Widget?> input, List<double?> inputx, List<double?> inputy){
+    _teleopChildren = input;
+    _dxTeleop = inputx;
+    _dyTeleop = inputy;
+  }
+  void updateTeleopFlip(bool input){
+    _teleopFlip = input;
+  }
+// BELOW IS ENDGAME THIS CODE IS PAINFUL TO WRITE
+  Duration _elapsedTimeEndgame = Duration.zero;
+  ClimbLevel _endgameClimbLevel = ClimbLevel.Level1;
+
+  Duration get elapsedTimeEndgame => _elapsedTimeEndgame;
+  ClimbLevel get endgameClimbLevel => _endgameClimbLevel;
+
+  void updateEndgameTimer(Duration input){
+    _elapsedTimeEndgame = input;
+  }
+  void updateEndgameClimb(ClimbLevel input){
+   _endgameClimbLevel = input; 
+  }
+
 }

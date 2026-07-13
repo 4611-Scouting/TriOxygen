@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:trioxygen/state.dart' show CounterProvider, ClimbLevel;
 class MyStopwatch extends StatefulWidget {
   const MyStopwatch({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class _MyStopwatchState extends State<MyStopwatch> {
   void initState() {
     super.initState();
 
-    _elapsedTime = Duration.zero;
+    _elapsedTime = context.read<CounterProvider>().elapsedTimeEndgame;
     _elapsedTimeString = _formatElapsedTime(_elapsedTime);
 
     // Create a timer that runs a callback every 100 milliseconds to update UI
@@ -55,6 +57,7 @@ class _MyStopwatchState extends State<MyStopwatch> {
   void _updateElapsedTime() {
     setState(() {
       _elapsedTime = _stopwatch.elapsed;
+      context.read<CounterProvider>().updateEndgameTimer(_elapsedTime);
       _elapsedTimeString = _formatElapsedTime(_elapsedTime);
     });
   }
@@ -112,10 +115,14 @@ class EndgameEntry extends StatefulWidget {
   State<EndgameEntry> createState() => _EndgameEntryState();
 }
 
-enum ClimbLevel { Level1, Level2, Level3, Attempted, NotAttempted }
 
 class _EndgameEntryState extends State<EndgameEntry> {
-  ClimbLevel climbLevelView = ClimbLevel.Level1;
+  late ClimbLevel climbLevelView; 
+  @override
+    void initState() {
+    super.initState();
+    climbLevelView = context.read<CounterProvider>().endgameClimbLevel;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +169,7 @@ class _EndgameEntryState extends State<EndgameEntry> {
             onSelectionChanged: (Set<ClimbLevel> newSelection) {
               setState(() {
                 climbLevelView = newSelection.first;
+                context.read<CounterProvider>().updateEndgameClimb(newSelection.first);
               });
             },
           ),
