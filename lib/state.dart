@@ -5,6 +5,9 @@ enum RobotPosition { Red1, Red2, Red3, Blue1, Blue2, Blue3}
 enum MatchLevel {Practice, Quals, Playoffs}
 enum SingingCharacter {NoAttempt, Attempted, Successful}
 enum ClimbLevel { Level1, Level2, Level3, Attempted, NotAttempted }
+enum DriverSkill { nE, a, vE, nO,}
+enum DefenseSkill { bA, a, g, e,dnpd}
+enum SpeedSkill {one,two,three,four,five}
 class CounterProvider extends ChangeNotifier {
   String _userName = '';
   String _matchNumber = '';
@@ -121,5 +124,47 @@ class CounterProvider extends ChangeNotifier {
   void updateEndgameClimb(ClimbLevel input){
    _endgameClimbLevel = input; 
   }
+// SUBMIT LAST PAGE FINALLY ALMOST DONE
+  List<bool?> _isCheckedSubmit = [false, false, false, false, false];
+  String _fuel = '';
+  String _autoComments = '';
+  String _beached = '';
+  String _comments = '';
+  DriverSkill _driverSkill = DriverSkill.nE;
+  DefenseSkill _defenseSkill = DefenseSkill.dnpd;
+  SpeedSkill _speedSkill = SpeedSkill.three;
 
+  List<bool?> get isCheckedSubmit => _isCheckedSubmit;
+  String get fuel => _fuel;
+  String get autoComments => _autoComments;
+  String get beached => _beached;
+  String get comments => _comments;
+  DriverSkill get driverSkill => _driverSkill;
+  DefenseSkill get defenseSkill => _defenseSkill;
+  SpeedSkill get speedSkill => _speedSkill;
+
+  void updateIsCheckedSubmit(bool? input, int index){
+    _isCheckedSubmit[index] = input;
+  }
+  void updateFuel(String input){
+    _fuel = input;
+  }
+  void updateAutoComments(String input){
+    _autoComments = input;
+  }
+  void updateBeached(String input){
+    _beached = input;
+  }
+  void updateComments(String input){
+    _comments = input;
+  }
+  void updateDriverSkill(DriverSkill input){
+    _driverSkill = input;
+  }
+  void updateDefenseSkill(DefenseSkill input){
+    _defenseSkill = input;
+  }
+  void updateSpeedSkill(SpeedSkill input){
+    _speedSkill = input;
+  }
 }

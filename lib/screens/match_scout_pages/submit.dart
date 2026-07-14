@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:trioxygen/state.dart';
 
 class Submit extends StatefulWidget {
   const Submit({super.key});
@@ -7,26 +9,64 @@ class Submit extends StatefulWidget {
   @override
   State<Submit> createState() => _SubmitState();
 }
-enum DriverSkill { nE, a, vE, nO,}
-enum DefenseSkill { bA, a, g, e,dnpd}
-enum SpeedSkill {one,two,three,four,five}
 class _SubmitState extends State<Submit> {
-   DriverSkill DriverSkillView = DriverSkill.nE;
-   DefenseSkill DefenseSkillView = DefenseSkill.dnpd;
-   SpeedSkill SpeedSkillView = SpeedSkill.three;
+  
+   bool? isChecked1,
+   isChecked2,
+   isChecked3,
+   isChecked4,
+   isChecked5;
 
-   bool? isChecked1 = false,
-   isChecked2 = false,
-   isChecked3 = false,
-   isChecked4 = false,
-   isChecked5 = false;
+   late DriverSkill DriverSkillView;
+   late DefenseSkill DefenseSkillView;
+   late SpeedSkill SpeedSkillView;
+  late TextEditingController beachedController, autoCommentsController, commentsController, fuelController;   @override
+  void initState() {
+    super.initState();
+    final counter = context.read<CounterProvider>();
+    
+    isChecked1 = context.read<CounterProvider>().isCheckedSubmit[0];
+    isChecked2 = context.read<CounterProvider>().isCheckedSubmit[1];
+    isChecked3 = context.read<CounterProvider>().isCheckedSubmit[2];
+    isChecked4 = context.read<CounterProvider>().isCheckedSubmit[3];
+    isChecked5 = context.read<CounterProvider>().isCheckedSubmit[4];
 
-  static var beachedController = TextEditingController();
-  static var autoCommentsController = TextEditingController();
-  static var commentsController = TextEditingController();
-  static var fuelController = TextEditingController();
+    beachedController = TextEditingController();
+    autoCommentsController = TextEditingController();
+    commentsController = TextEditingController();
+    fuelController = TextEditingController();
+
+    beachedController.text = counter.beached;
+    autoCommentsController.text = counter.autoComments;
+    commentsController.text = counter.comments;
+    fuelController.text = counter.fuel;
+
+    beachedController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateBeached(beachedController.text);
+    });
+    autoCommentsController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateAutoComments(autoCommentsController.text);
+    });
+    fuelController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateFuel(fuelController.text);
+    });
+    commentsController.addListener(() {
+        Provider.of<CounterProvider>(context, listen: false)
+            .updateComments(commentsController.text);
+    });
+    DriverSkillView = counter.driverSkill;
+    DefenseSkillView = counter.defenseSkill;
+    SpeedSkillView = counter.speedSkill;
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+    final counter = context.read<CounterProvider>();
     //print('yah');
         return SingleChildScrollView(child: Center(child: SafeArea(child: Padding(
       padding: const EdgeInsets.all(20.0), child: Column(children: [
@@ -61,6 +101,7 @@ class _SubmitState extends State<Submit> {
             onSelectionChanged: (Set<DriverSkill> newSelection) {
               setState(() {
                 DriverSkillView = newSelection.first;
+                counter.updateDriverSkill(newSelection.first);
               });
             },
           ),
@@ -100,6 +141,7 @@ class _SubmitState extends State<Submit> {
             onSelectionChanged: (Set<DefenseSkill> newSelection) {
               setState(() {
                 DefenseSkillView = newSelection.first;
+                counter.updateDefenseSkill(newSelection.first);
               });
             },
           ),
@@ -139,6 +181,7 @@ class _SubmitState extends State<Submit> {
             onSelectionChanged: (Set<SpeedSkill> newSelection) {
               setState(() {
                 SpeedSkillView = newSelection.first;
+                counter.updateSpeedSkill(newSelection.first);
               });
             },
           ),
@@ -148,6 +191,7 @@ class _SubmitState extends State<Submit> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked1 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedSubmit(newBool, 0);
                 });
               },
             ),
@@ -178,6 +222,7 @@ class _SubmitState extends State<Submit> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked2 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedSubmit(newBool, 1);
                 });
               },
             ),
@@ -187,6 +232,7 @@ class _SubmitState extends State<Submit> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked3 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedSubmit(newBool, 2);
                 });
               },
             ),
@@ -196,6 +242,7 @@ class _SubmitState extends State<Submit> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked4 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedSubmit(newBool, 3);
                 });
               },
             ),
@@ -205,6 +252,7 @@ class _SubmitState extends State<Submit> {
               onChanged: (newBool) {
                 setState(() {
                   isChecked5 = newBool;
+                  context.read<CounterProvider>().updateIsCheckedSubmit(newBool, 4);
                 });
               },
             ),
