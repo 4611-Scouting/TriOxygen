@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:trioxygen/screens/data.dart' show DataView;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
-
+import 'package:flutter/material.dart';
+import 'package:trioxygen/screens/match_scout.dart';
+import 'package:trioxygen/state.dart' show CounterProvider;
+import 'package:provider/provider.dart';
+import 'package:trioxygen/drift.dart';
 import 'package:trioxygen/screens/match_scout_pages/team_entry.dart' show TeamEntry;
 import 'package:trioxygen/screens/match_scout_pages/auto_entry.dart' show AutonPage;
 import 'package:trioxygen/screens/match_scout_pages/endgame_entry.dart' show EndgameEntry;
@@ -10,8 +14,8 @@ import 'package:trioxygen/screens/match_scout_pages/teleop_entry.dart' show Tele
 import 'package:trioxygen/screens/match_scout_pages/submit.dart' show Submit;
 
 class Scout extends StatelessWidget {
-  const Scout({super.key});
-
+  final AppDatabase database;
+  const Scout({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +64,7 @@ class Scout extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Scout(),
+                builder: (context) => Scout(database: database),
               ),
             );
 
@@ -73,7 +77,7 @@ class Scout extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Dashboard(),
+                builder: (context) => Dashboard(database: database),
               ),
             );
           },
@@ -85,7 +89,7 @@ class Scout extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const DataView(),
+                builder: (context) => DataView(database: database),
               ),
             );
           },
@@ -97,7 +101,7 @@ class Scout extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Settings(),
+                builder: (context) => Settings(database: database),
               ),
             );
 

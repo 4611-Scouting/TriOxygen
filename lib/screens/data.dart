@@ -3,8 +3,14 @@ import 'package:trioxygen/screens/match_scout.dart' show MatchScout;
 import 'package:trioxygen/screens/pit_scout.dart' show PitScout;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
+import 'package:flutter/material.dart';
+import 'package:trioxygen/screens/match_scout.dart';
+import 'package:trioxygen/state.dart' show CounterProvider;
+import 'package:provider/provider.dart';
+import 'package:trioxygen/drift.dart';
 class DataView extends StatelessWidget {
-  const DataView({super.key});
+  final AppDatabase database;
+  const DataView({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,7 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const MatchScout(),
+                builder: (context) => MatchScout(database: database),
               ),
             );
           },
@@ -38,7 +44,7 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const DataView(),
+                builder: (context) =>  DataView(database: database),
               ),
             );
           },
@@ -50,7 +56,7 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Dashboard(),
+                builder: (context) => Dashboard(database: database),
               ),
             );
 
@@ -63,7 +69,7 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const DataView(),
+                builder: (context) => DataView(database: database),
               ),
             );
 
@@ -76,7 +82,7 @@ class DataView extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute<void>(
-                builder: (context) => const Settings(),
+                builder: (context) => Settings(database: database),
               ),
             );
 
