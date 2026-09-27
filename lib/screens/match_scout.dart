@@ -45,13 +45,13 @@ class MatchScout extends StatelessWidget {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
               TeamEntry(),
               AutonPage(),
               TeleopPage(),
               EndgameEntry(),
-              Submit()
+              Submit(database: database,)
             ],
           ),
         ),

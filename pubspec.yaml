@@ -40,6 +40,7 @@ dependencies:
   drift_flutter: ^0.2.8  # Simplifies database paths across platforms
   sqlite3_flutter_libs: ^0.5.0 # Includes the latest sqlite3 binary
   path_provider: ^2.1.6
+  uuid: ^4.6.0
 
 dev_dependencies:
   flutter_test:

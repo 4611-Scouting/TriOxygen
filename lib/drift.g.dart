@@ -20,6 +20,15 @@ class $ScoutReportsTable extends ScoutReports
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _matchNumberMeta = const VerificationMeta(
     'matchNumber',
   );
@@ -79,33 +88,31 @@ class $ScoutReportsTable extends ScoutReports
   );
   static const VerificationMeta _dxMeta = const VerificationMeta('dx');
   @override
-  late final GeneratedColumn<int> dx = GeneratedColumn<int>(
+  late final GeneratedColumn<double> dx = GeneratedColumn<double>(
     'dx',
     aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _dyMeta = const VerificationMeta('dy');
   @override
-  late final GeneratedColumn<int> dy = GeneratedColumn<int>(
+  late final GeneratedColumn<double> dy = GeneratedColumn<double>(
     'dy',
     aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _elapsedTimeAutonMeta = const VerificationMeta(
-    'elapsedTimeAuton',
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
   );
   @override
-  late final GeneratedColumn<int> elapsedTimeAuton = GeneratedColumn<int>(
-    'elapsed_time_auton',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
+  late final GeneratedColumnWithTypeConverter<Duration?, int> elapsedTimeAuton =
+      GeneratedColumn<int>(
+        'elapsed_time_auton',
+        aliasedName,
+        true,
+        type: DriftSqlType.int,
+        requiredDuringInsert: false,
+      ).withConverter<Duration?>($ScoutReportsTable.$converterelapsedTimeAuton);
   static const VerificationMeta _autonClimbMeta = const VerificationMeta(
     'autonClimb',
   );
@@ -317,6 +324,7 @@ class $ScoutReportsTable extends ScoutReports
   @override
   List<GeneratedColumn> get $columns => [
     username,
+    uuid,
     matchNumber,
     teamNumber,
     flip,
@@ -365,6 +373,14 @@ class $ScoutReportsTable extends ScoutReports
     } else if (isInserting) {
       context.missing(_usernameMeta);
     }
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_uuidMeta);
+    }
     if (data.containsKey('match_number')) {
       context.handle(
         _matchNumberMeta,
@@ -411,24 +427,9 @@ class $ScoutReportsTable extends ScoutReports
     }
     if (data.containsKey('dx')) {
       context.handle(_dxMeta, dx.isAcceptableOrUnknown(data['dx']!, _dxMeta));
-    } else if (isInserting) {
-      context.missing(_dxMeta);
     }
     if (data.containsKey('dy')) {
       context.handle(_dyMeta, dy.isAcceptableOrUnknown(data['dy']!, _dyMeta));
-    } else if (isInserting) {
-      context.missing(_dyMeta);
-    }
-    if (data.containsKey('elapsed_time_auton')) {
-      context.handle(
-        _elapsedTimeAutonMeta,
-        elapsedTimeAuton.isAcceptableOrUnknown(
-          data['elapsed_time_auton']!,
-          _elapsedTimeAutonMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_elapsedTimeAutonMeta);
     }
     if (data.containsKey('auton_climb')) {
       context.handle(
@@ -550,6 +551,10 @@ class $ScoutReportsTable extends ScoutReports
         DriftSqlType.string,
         data['${effectivePrefix}username'],
       )!,
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
       matchNumber: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}match_number'],
@@ -571,17 +576,19 @@ class $ScoutReportsTable extends ScoutReports
         data['${effectivePrefix}match_level'],
       )!,
       dx: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}dx'],
-      )!,
+      ),
       dy: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}dy'],
-      )!,
-      elapsedTimeAuton: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}elapsed_time_auton'],
-      )!,
+      ),
+      elapsedTimeAuton: $ScoutReportsTable.$converterelapsedTimeAuton.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}elapsed_time_auton'],
+        ),
+      ),
       autonClimb: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}auton_climb'],
@@ -680,6 +687,8 @@ class $ScoutReportsTable extends ScoutReports
     return $ScoutReportsTable(attachedDatabase, alias);
   }
 
+  static TypeConverter<Duration?, int?> $converterelapsedTimeAuton =
+      NullAwareTypeConverter.wrap(const DurationSecondsConverter());
   static TypeConverter<List<bool>, String> $converterisCheckedAuton =
       const boolListConverter();
   static TypeConverter<List<int>, String> $converterdxAuton =
@@ -698,14 +707,15 @@ class $ScoutReportsTable extends ScoutReports
 
 class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   final String username;
+  final String uuid;
   final int matchNumber;
   final int teamNumber;
   final bool flip;
   final String RobotPosition;
   final String MatchLevel;
-  final int dx;
-  final int dy;
-  final int elapsedTimeAuton;
+  final double? dx;
+  final double? dy;
+  final Duration? elapsedTimeAuton;
   final String autonClimb;
   final List<bool> isCheckedAuton;
   final List<int> dxAuton;
@@ -727,14 +737,15 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   final String speedSkill;
   const ScoutReport({
     required this.username,
+    required this.uuid,
     required this.matchNumber,
     required this.teamNumber,
     required this.flip,
     required this.RobotPosition,
     required this.MatchLevel,
-    required this.dx,
-    required this.dy,
-    required this.elapsedTimeAuton,
+    this.dx,
+    this.dy,
+    this.elapsedTimeAuton,
     required this.autonClimb,
     required this.isCheckedAuton,
     required this.dxAuton,
@@ -759,14 +770,23 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['username'] = Variable<String>(username);
+    map['uuid'] = Variable<String>(uuid);
     map['match_number'] = Variable<int>(matchNumber);
     map['team_number'] = Variable<int>(teamNumber);
     map['flip'] = Variable<bool>(flip);
     map['robot_position'] = Variable<String>(RobotPosition);
     map['match_level'] = Variable<String>(MatchLevel);
-    map['dx'] = Variable<int>(dx);
-    map['dy'] = Variable<int>(dy);
-    map['elapsed_time_auton'] = Variable<int>(elapsedTimeAuton);
+    if (!nullToAbsent || dx != null) {
+      map['dx'] = Variable<double>(dx);
+    }
+    if (!nullToAbsent || dy != null) {
+      map['dy'] = Variable<double>(dy);
+    }
+    if (!nullToAbsent || elapsedTimeAuton != null) {
+      map['elapsed_time_auton'] = Variable<int>(
+        $ScoutReportsTable.$converterelapsedTimeAuton.toSql(elapsedTimeAuton),
+      );
+    }
     map['auton_climb'] = Variable<String>(autonClimb);
     {
       map['is_checked_auton'] = Variable<String>(
@@ -820,14 +840,17 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   ScoutReportsCompanion toCompanion(bool nullToAbsent) {
     return ScoutReportsCompanion(
       username: Value(username),
+      uuid: Value(uuid),
       matchNumber: Value(matchNumber),
       teamNumber: Value(teamNumber),
       flip: Value(flip),
       RobotPosition: Value(RobotPosition),
       MatchLevel: Value(MatchLevel),
-      dx: Value(dx),
-      dy: Value(dy),
-      elapsedTimeAuton: Value(elapsedTimeAuton),
+      dx: dx == null && nullToAbsent ? const Value.absent() : Value(dx),
+      dy: dy == null && nullToAbsent ? const Value.absent() : Value(dy),
+      elapsedTimeAuton: elapsedTimeAuton == null && nullToAbsent
+          ? const Value.absent()
+          : Value(elapsedTimeAuton),
       autonClimb: Value(autonClimb),
       isCheckedAuton: Value(isCheckedAuton),
       dxAuton: Value(dxAuton),
@@ -857,14 +880,17 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ScoutReport(
       username: serializer.fromJson<String>(json['username']),
+      uuid: serializer.fromJson<String>(json['uuid']),
       matchNumber: serializer.fromJson<int>(json['matchNumber']),
       teamNumber: serializer.fromJson<int>(json['teamNumber']),
       flip: serializer.fromJson<bool>(json['flip']),
       RobotPosition: serializer.fromJson<String>(json['RobotPosition']),
       MatchLevel: serializer.fromJson<String>(json['MatchLevel']),
-      dx: serializer.fromJson<int>(json['dx']),
-      dy: serializer.fromJson<int>(json['dy']),
-      elapsedTimeAuton: serializer.fromJson<int>(json['elapsedTimeAuton']),
+      dx: serializer.fromJson<double?>(json['dx']),
+      dy: serializer.fromJson<double?>(json['dy']),
+      elapsedTimeAuton: serializer.fromJson<Duration?>(
+        json['elapsedTimeAuton'],
+      ),
       autonClimb: serializer.fromJson<String>(json['autonClimb']),
       isCheckedAuton: serializer.fromJson<List<bool>>(json['isCheckedAuton']),
       dxAuton: serializer.fromJson<List<int>>(json['dxAuton']),
@@ -891,14 +917,15 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'username': serializer.toJson<String>(username),
+      'uuid': serializer.toJson<String>(uuid),
       'matchNumber': serializer.toJson<int>(matchNumber),
       'teamNumber': serializer.toJson<int>(teamNumber),
       'flip': serializer.toJson<bool>(flip),
       'RobotPosition': serializer.toJson<String>(RobotPosition),
       'MatchLevel': serializer.toJson<String>(MatchLevel),
-      'dx': serializer.toJson<int>(dx),
-      'dy': serializer.toJson<int>(dy),
-      'elapsedTimeAuton': serializer.toJson<int>(elapsedTimeAuton),
+      'dx': serializer.toJson<double?>(dx),
+      'dy': serializer.toJson<double?>(dy),
+      'elapsedTimeAuton': serializer.toJson<Duration?>(elapsedTimeAuton),
       'autonClimb': serializer.toJson<String>(autonClimb),
       'isCheckedAuton': serializer.toJson<List<bool>>(isCheckedAuton),
       'dxAuton': serializer.toJson<List<int>>(dxAuton),
@@ -923,14 +950,15 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
 
   ScoutReport copyWith({
     String? username,
+    String? uuid,
     int? matchNumber,
     int? teamNumber,
     bool? flip,
     String? RobotPosition,
     String? MatchLevel,
-    int? dx,
-    int? dy,
-    int? elapsedTimeAuton,
+    Value<double?> dx = const Value.absent(),
+    Value<double?> dy = const Value.absent(),
+    Value<Duration?> elapsedTimeAuton = const Value.absent(),
     String? autonClimb,
     List<bool>? isCheckedAuton,
     List<int>? dxAuton,
@@ -952,14 +980,17 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     String? speedSkill,
   }) => ScoutReport(
     username: username ?? this.username,
+    uuid: uuid ?? this.uuid,
     matchNumber: matchNumber ?? this.matchNumber,
     teamNumber: teamNumber ?? this.teamNumber,
     flip: flip ?? this.flip,
     RobotPosition: RobotPosition ?? this.RobotPosition,
     MatchLevel: MatchLevel ?? this.MatchLevel,
-    dx: dx ?? this.dx,
-    dy: dy ?? this.dy,
-    elapsedTimeAuton: elapsedTimeAuton ?? this.elapsedTimeAuton,
+    dx: dx.present ? dx.value : this.dx,
+    dy: dy.present ? dy.value : this.dy,
+    elapsedTimeAuton: elapsedTimeAuton.present
+        ? elapsedTimeAuton.value
+        : this.elapsedTimeAuton,
     autonClimb: autonClimb ?? this.autonClimb,
     isCheckedAuton: isCheckedAuton ?? this.isCheckedAuton,
     dxAuton: dxAuton ?? this.dxAuton,
@@ -983,6 +1014,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   ScoutReport copyWithCompanion(ScoutReportsCompanion data) {
     return ScoutReport(
       username: data.username.present ? data.username.value : this.username,
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
       matchNumber: data.matchNumber.present
           ? data.matchNumber.value
           : this.matchNumber,
@@ -1049,6 +1081,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   String toString() {
     return (StringBuffer('ScoutReport(')
           ..write('username: $username, ')
+          ..write('uuid: $uuid, ')
           ..write('matchNumber: $matchNumber, ')
           ..write('teamNumber: $teamNumber, ')
           ..write('flip: $flip, ')
@@ -1083,6 +1116,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   @override
   int get hashCode => Object.hashAll([
     username,
+    uuid,
     matchNumber,
     teamNumber,
     flip,
@@ -1116,6 +1150,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       identical(this, other) ||
       (other is ScoutReport &&
           other.username == this.username &&
+          other.uuid == this.uuid &&
           other.matchNumber == this.matchNumber &&
           other.teamNumber == this.teamNumber &&
           other.flip == this.flip &&
@@ -1147,14 +1182,15 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
 
 class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   final Value<String> username;
+  final Value<String> uuid;
   final Value<int> matchNumber;
   final Value<int> teamNumber;
   final Value<bool> flip;
   final Value<String> RobotPosition;
   final Value<String> MatchLevel;
-  final Value<int> dx;
-  final Value<int> dy;
-  final Value<int> elapsedTimeAuton;
+  final Value<double?> dx;
+  final Value<double?> dy;
+  final Value<Duration?> elapsedTimeAuton;
   final Value<String> autonClimb;
   final Value<List<bool>> isCheckedAuton;
   final Value<List<int>> dxAuton;
@@ -1177,6 +1213,7 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   final Value<int> rowid;
   const ScoutReportsCompanion({
     this.username = const Value.absent(),
+    this.uuid = const Value.absent(),
     this.matchNumber = const Value.absent(),
     this.teamNumber = const Value.absent(),
     this.flip = const Value.absent(),
@@ -1208,14 +1245,15 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   });
   ScoutReportsCompanion.insert({
     required String username,
+    required String uuid,
     required int matchNumber,
     required int teamNumber,
     this.flip = const Value.absent(),
     required String RobotPosition,
     required String MatchLevel,
-    required int dx,
-    required int dy,
-    required int elapsedTimeAuton,
+    this.dx = const Value.absent(),
+    this.dy = const Value.absent(),
+    this.elapsedTimeAuton = const Value.absent(),
     required String autonClimb,
     this.isCheckedAuton = const Value.absent(),
     this.dxAuton = const Value.absent(),
@@ -1237,13 +1275,11 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     required String speedSkill,
     this.rowid = const Value.absent(),
   }) : username = Value(username),
+       uuid = Value(uuid),
        matchNumber = Value(matchNumber),
        teamNumber = Value(teamNumber),
        RobotPosition = Value(RobotPosition),
        MatchLevel = Value(MatchLevel),
-       dx = Value(dx),
-       dy = Value(dy),
-       elapsedTimeAuton = Value(elapsedTimeAuton),
        autonClimb = Value(autonClimb),
        endgameClimbLevel = Value(endgameClimbLevel),
        elapsedTimeEndgame = Value(elapsedTimeEndgame),
@@ -1256,13 +1292,14 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
        speedSkill = Value(speedSkill);
   static Insertable<ScoutReport> custom({
     Expression<String>? username,
+    Expression<String>? uuid,
     Expression<int>? matchNumber,
     Expression<int>? teamNumber,
     Expression<bool>? flip,
     Expression<String>? RobotPosition,
     Expression<String>? MatchLevel,
-    Expression<int>? dx,
-    Expression<int>? dy,
+    Expression<double>? dx,
+    Expression<double>? dy,
     Expression<int>? elapsedTimeAuton,
     Expression<String>? autonClimb,
     Expression<String>? isCheckedAuton,
@@ -1287,6 +1324,7 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   }) {
     return RawValuesInsertable({
       if (username != null) 'username': username,
+      if (uuid != null) 'uuid': uuid,
       if (matchNumber != null) 'match_number': matchNumber,
       if (teamNumber != null) 'team_number': teamNumber,
       if (flip != null) 'flip': flip,
@@ -1321,14 +1359,15 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
 
   ScoutReportsCompanion copyWith({
     Value<String>? username,
+    Value<String>? uuid,
     Value<int>? matchNumber,
     Value<int>? teamNumber,
     Value<bool>? flip,
     Value<String>? RobotPosition,
     Value<String>? MatchLevel,
-    Value<int>? dx,
-    Value<int>? dy,
-    Value<int>? elapsedTimeAuton,
+    Value<double?>? dx,
+    Value<double?>? dy,
+    Value<Duration?>? elapsedTimeAuton,
     Value<String>? autonClimb,
     Value<List<bool>>? isCheckedAuton,
     Value<List<int>>? dxAuton,
@@ -1352,6 +1391,7 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   }) {
     return ScoutReportsCompanion(
       username: username ?? this.username,
+      uuid: uuid ?? this.uuid,
       matchNumber: matchNumber ?? this.matchNumber,
       teamNumber: teamNumber ?? this.teamNumber,
       flip: flip ?? this.flip,
@@ -1389,6 +1429,9 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     if (username.present) {
       map['username'] = Variable<String>(username.value);
     }
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
     if (matchNumber.present) {
       map['match_number'] = Variable<int>(matchNumber.value);
     }
@@ -1405,13 +1448,17 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
       map['match_level'] = Variable<String>(MatchLevel.value);
     }
     if (dx.present) {
-      map['dx'] = Variable<int>(dx.value);
+      map['dx'] = Variable<double>(dx.value);
     }
     if (dy.present) {
-      map['dy'] = Variable<int>(dy.value);
+      map['dy'] = Variable<double>(dy.value);
     }
     if (elapsedTimeAuton.present) {
-      map['elapsed_time_auton'] = Variable<int>(elapsedTimeAuton.value);
+      map['elapsed_time_auton'] = Variable<int>(
+        $ScoutReportsTable.$converterelapsedTimeAuton.toSql(
+          elapsedTimeAuton.value,
+        ),
+      );
     }
     if (autonClimb.present) {
       map['auton_climb'] = Variable<String>(autonClimb.value);
@@ -1498,6 +1545,7 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   String toString() {
     return (StringBuffer('ScoutReportsCompanion(')
           ..write('username: $username, ')
+          ..write('uuid: $uuid, ')
           ..write('matchNumber: $matchNumber, ')
           ..write('teamNumber: $teamNumber, ')
           ..write('flip: $flip, ')
@@ -1545,14 +1593,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $$ScoutReportsTableCreateCompanionBuilder =
     ScoutReportsCompanion Function({
       required String username,
+      required String uuid,
       required int matchNumber,
       required int teamNumber,
       Value<bool> flip,
       required String RobotPosition,
       required String MatchLevel,
-      required int dx,
-      required int dy,
-      required int elapsedTimeAuton,
+      Value<double?> dx,
+      Value<double?> dy,
+      Value<Duration?> elapsedTimeAuton,
       required String autonClimb,
       Value<List<bool>> isCheckedAuton,
       Value<List<int>> dxAuton,
@@ -1577,14 +1626,15 @@ typedef $$ScoutReportsTableCreateCompanionBuilder =
 typedef $$ScoutReportsTableUpdateCompanionBuilder =
     ScoutReportsCompanion Function({
       Value<String> username,
+      Value<String> uuid,
       Value<int> matchNumber,
       Value<int> teamNumber,
       Value<bool> flip,
       Value<String> RobotPosition,
       Value<String> MatchLevel,
-      Value<int> dx,
-      Value<int> dy,
-      Value<int> elapsedTimeAuton,
+      Value<double?> dx,
+      Value<double?> dy,
+      Value<Duration?> elapsedTimeAuton,
       Value<String> autonClimb,
       Value<List<bool>> isCheckedAuton,
       Value<List<int>> dxAuton,
@@ -1621,6 +1671,11 @@ class $$ScoutReportsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get matchNumber => $composableBuilder(
     column: $table.matchNumber,
     builder: (column) => ColumnFilters(column),
@@ -1646,19 +1701,20 @@ class $$ScoutReportsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get dx => $composableBuilder(
+  ColumnFilters<double> get dx => $composableBuilder(
     column: $table.dx,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get dy => $composableBuilder(
+  ColumnFilters<double> get dy => $composableBuilder(
     column: $table.dy,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get elapsedTimeAuton => $composableBuilder(
+  ColumnWithTypeConverterFilters<Duration?, Duration, int>
+  get elapsedTimeAuton => $composableBuilder(
     column: $table.elapsedTimeAuton,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnFilters<String> get autonClimb => $composableBuilder(
@@ -1778,6 +1834,11 @@ class $$ScoutReportsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get matchNumber => $composableBuilder(
     column: $table.matchNumber,
     builder: (column) => ColumnOrderings(column),
@@ -1803,12 +1864,12 @@ class $$ScoutReportsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get dx => $composableBuilder(
+  ColumnOrderings<double> get dx => $composableBuilder(
     column: $table.dx,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get dy => $composableBuilder(
+  ColumnOrderings<double> get dy => $composableBuilder(
     column: $table.dy,
     builder: (column) => ColumnOrderings(column),
   );
@@ -1926,6 +1987,9 @@ class $$ScoutReportsTableAnnotationComposer
   GeneratedColumn<String> get username =>
       $composableBuilder(column: $table.username, builder: (column) => column);
 
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
   GeneratedColumn<int> get matchNumber => $composableBuilder(
     column: $table.matchNumber,
     builder: (column) => column,
@@ -1949,16 +2013,17 @@ class $$ScoutReportsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get dx =>
+  GeneratedColumn<double> get dx =>
       $composableBuilder(column: $table.dx, builder: (column) => column);
 
-  GeneratedColumn<int> get dy =>
+  GeneratedColumn<double> get dy =>
       $composableBuilder(column: $table.dy, builder: (column) => column);
 
-  GeneratedColumn<int> get elapsedTimeAuton => $composableBuilder(
-    column: $table.elapsedTimeAuton,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<Duration?, int> get elapsedTimeAuton =>
+      $composableBuilder(
+        column: $table.elapsedTimeAuton,
+        builder: (column) => column,
+      );
 
   GeneratedColumn<String> get autonClimb => $composableBuilder(
     column: $table.autonClimb,
@@ -2075,14 +2140,15 @@ class $$ScoutReportsTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> username = const Value.absent(),
+                Value<String> uuid = const Value.absent(),
                 Value<int> matchNumber = const Value.absent(),
                 Value<int> teamNumber = const Value.absent(),
                 Value<bool> flip = const Value.absent(),
                 Value<String> RobotPosition = const Value.absent(),
                 Value<String> MatchLevel = const Value.absent(),
-                Value<int> dx = const Value.absent(),
-                Value<int> dy = const Value.absent(),
-                Value<int> elapsedTimeAuton = const Value.absent(),
+                Value<double?> dx = const Value.absent(),
+                Value<double?> dy = const Value.absent(),
+                Value<Duration?> elapsedTimeAuton = const Value.absent(),
                 Value<String> autonClimb = const Value.absent(),
                 Value<List<bool>> isCheckedAuton = const Value.absent(),
                 Value<List<int>> dxAuton = const Value.absent(),
@@ -2105,6 +2171,7 @@ class $$ScoutReportsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => ScoutReportsCompanion(
                 username: username,
+                uuid: uuid,
                 matchNumber: matchNumber,
                 teamNumber: teamNumber,
                 flip: flip,
@@ -2137,14 +2204,15 @@ class $$ScoutReportsTableTableManager
           createCompanionCallback:
               ({
                 required String username,
+                required String uuid,
                 required int matchNumber,
                 required int teamNumber,
                 Value<bool> flip = const Value.absent(),
                 required String RobotPosition,
                 required String MatchLevel,
-                required int dx,
-                required int dy,
-                required int elapsedTimeAuton,
+                Value<double?> dx = const Value.absent(),
+                Value<double?> dy = const Value.absent(),
+                Value<Duration?> elapsedTimeAuton = const Value.absent(),
                 required String autonClimb,
                 Value<List<bool>> isCheckedAuton = const Value.absent(),
                 Value<List<int>> dxAuton = const Value.absent(),
@@ -2167,6 +2235,7 @@ class $$ScoutReportsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => ScoutReportsCompanion.insert(
                 username: username,
+                uuid: uuid,
                 matchNumber: matchNumber,
                 teamNumber: teamNumber,
                 flip: flip,

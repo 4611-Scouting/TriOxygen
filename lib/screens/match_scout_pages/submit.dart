@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:trioxygen/state.dart';
-
+import 'package:flutter/material.dart';
+import 'package:trioxygen/screens/match_scout.dart';
+import 'package:trioxygen/state.dart' show CounterProvider;
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:trioxygen/drift.dart';
+import 'package:drift/drift.dart';
 class Submit extends StatefulWidget {
-  const Submit({super.key});
+  final AppDatabase database;
+  const Submit({super.key, required this.database});
 
   @override
   State<Submit> createState() => _SubmitState();
 }
 class _SubmitState extends State<Submit> {
+
   
    bool? isChecked1,
    isChecked2,
@@ -68,6 +76,7 @@ class _SubmitState extends State<Submit> {
   Widget build(BuildContext context) {
     final counter = context.read<CounterProvider>();
     //print('yah');
+      var uuid = Uuid();
         return SingleChildScrollView(child: Center(child: SafeArea(child: Padding(
       padding: const EdgeInsets.all(20.0), child: Column(children: [
           Text('Driver Skill', style: TextStyle(fontSize: 20),),
@@ -317,8 +326,27 @@ class _SubmitState extends State<Submit> {
         Padding(padding: EdgeInsetsGeometry.all(16), child: TextButton(style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
             foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-          ), onPressed: () {
-            print('submitted');
+          ), onPressed: () async {
+            await widget.database.into(widget.database.scoutReports).insert(
+          ScoutReportsCompanion.insert(
+          username: counter.userName,
+          uuid: uuid.v7(),
+          matchNumber: int.parse(counter.matchNumber),
+          teamNumber: int.parse(counter.teamNumber),
+          flip: Value(counter.flip),
+          RobotPosition: counter.robotPosition.name,
+          MatchLevel: counter.matchLevel.name,
+          dx: Value(counter.dx),
+          dy: Value(counter.dy),
+          elapsedTimeAuton: Value(counter.elapsedTimeAuton),
+          autonClimb: counter.autonClimb.name,
+          
+          
+
+
+
+          ),
+);
           }, child: const Text("Submit"))),                       
         ],),))));
     

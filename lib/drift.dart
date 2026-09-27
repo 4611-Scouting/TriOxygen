@@ -3,6 +3,8 @@
 import 'package:drift/drift.dart';
 import 'package:trioxygen/state.dart';
 import 'dart:convert';
+import 'package:drift_flutter/drift_flutter.dart';
+import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 part 'drift.g.dart';
@@ -45,19 +47,31 @@ class boolListConverter extends TypeConverter<List<bool>, String> {
     return jsonEncode(value);
   }
 }
+class DurationSecondsConverter extends TypeConverter<Duration, int> {
+  const DurationSecondsConverter();
+
+  @override
+  Duration fromSql(int fromDb) => Duration(seconds: fromDb);
+
+  @override
+  int toSql(Duration value) => value.inSeconds;
+}
 class ScoutReports extends Table{
   TextColumn get username => text()();
+  TextColumn get uuid => text()();
   IntColumn get matchNumber => integer()();
   IntColumn get teamNumber => integer()();
   BoolColumn get flip => boolean().withDefault(const Constant(false))();
   TextColumn get RobotPosition => text()();
   TextColumn get MatchLevel => text()();
-  IntColumn get dx => integer()();
-  IntColumn get dy => integer()();
+  RealColumn get dx => real().nullable()();
+  RealColumn get dy => real().nullable()();
 
 
 
-  IntColumn get elapsedTimeAuton => integer()();
+IntColumn get elapsedTimeAuton => integer()
+    .nullable()
+    .map(NullAwareTypeConverter.wrap(const DurationSecondsConverter()))();
   TextColumn get autonClimb => text()();
   TextColumn get isCheckedAuton => text()
       .map(const boolListConverter())
@@ -101,11 +115,14 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
-}
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'scouting.sqlite'));
-    return NativeDatabase.createInBackground(file);
-  });
+
+  static QueryExecutor _openConnection() {
+    return driftDatabase(
+      name: 'scouting',
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+      ),
+    );
+  }
 }
