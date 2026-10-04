@@ -120,12 +120,12 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> autonClimb = GeneratedColumn<String>(
     'auton_climb',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<List<bool>, String>
+  late final GeneratedColumnWithTypeConverter<List<bool?>, String>
   isCheckedAuton = GeneratedColumn<String>(
     'is_checked_auton',
     aliasedName,
@@ -133,9 +133,9 @@ class $ScoutReportsTable extends ScoutReports
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultValue: const Constant('[]'),
-  ).withConverter<List<bool>>($ScoutReportsTable.$converterisCheckedAuton);
+  ).withConverter<List<bool?>>($ScoutReportsTable.$converterisCheckedAuton);
   @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String> dxAuton =
+  late final GeneratedColumnWithTypeConverter<List<double?>, String> dxAuton =
       GeneratedColumn<String>(
         'dx_auton',
         aliasedName,
@@ -143,9 +143,9 @@ class $ScoutReportsTable extends ScoutReports
         type: DriftSqlType.string,
         requiredDuringInsert: false,
         defaultValue: const Constant('[]'),
-      ).withConverter<List<int>>($ScoutReportsTable.$converterdxAuton);
+      ).withConverter<List<double?>>($ScoutReportsTable.$converterdxAuton);
   @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String> dyAuton =
+  late final GeneratedColumnWithTypeConverter<List<double?>, String> dyAuton =
       GeneratedColumn<String>(
         'dy_auton',
         aliasedName,
@@ -153,7 +153,7 @@ class $ScoutReportsTable extends ScoutReports
         type: DriftSqlType.string,
         requiredDuringInsert: false,
         defaultValue: const Constant('[]'),
-      ).withConverter<List<int>>($ScoutReportsTable.$converterdyAuton);
+      ).withConverter<List<double?>>($ScoutReportsTable.$converterdyAuton);
   static const VerificationMeta _autonFlipMeta = const VerificationMeta(
     'autonFlip',
   );
@@ -170,7 +170,7 @@ class $ScoutReportsTable extends ScoutReports
     defaultValue: const Constant(false),
   );
   @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String>
+  late final GeneratedColumnWithTypeConverter<List<bool?>, String>
   isCheckedTeleop = GeneratedColumn<String>(
     'is_checked_teleop',
     aliasedName,
@@ -178,9 +178,9 @@ class $ScoutReportsTable extends ScoutReports
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultValue: const Constant('[]'),
-  ).withConverter<List<int>>($ScoutReportsTable.$converterisCheckedTeleop);
+  ).withConverter<List<bool?>>($ScoutReportsTable.$converterisCheckedTeleop);
   @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String> dxTeleop =
+  late final GeneratedColumnWithTypeConverter<List<double?>, String> dxTeleop =
       GeneratedColumn<String>(
         'dx_teleop',
         aliasedName,
@@ -188,9 +188,9 @@ class $ScoutReportsTable extends ScoutReports
         type: DriftSqlType.string,
         requiredDuringInsert: false,
         defaultValue: const Constant('[]'),
-      ).withConverter<List<int>>($ScoutReportsTable.$converterdxTeleop);
+      ).withConverter<List<double?>>($ScoutReportsTable.$converterdxTeleop);
   @override
-  late final GeneratedColumnWithTypeConverter<List<int>, String> dyTeleop =
+  late final GeneratedColumnWithTypeConverter<List<double?>, String> dyTeleop =
       GeneratedColumn<String>(
         'dy_teleop',
         aliasedName,
@@ -198,7 +198,7 @@ class $ScoutReportsTable extends ScoutReports
         type: DriftSqlType.string,
         requiredDuringInsert: false,
         defaultValue: const Constant('[]'),
-      ).withConverter<List<int>>($ScoutReportsTable.$converterdyTeleop);
+      ).withConverter<List<double?>>($ScoutReportsTable.$converterdyTeleop);
   static const VerificationMeta _teleopFlipMeta = const VerificationMeta(
     'teleopFlip',
   );
@@ -222,22 +222,21 @@ class $ScoutReportsTable extends ScoutReports
       GeneratedColumn<String>(
         'endgame_climb_level',
         aliasedName,
-        false,
+        true,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
+        requiredDuringInsert: false,
       );
-  static const VerificationMeta _elapsedTimeEndgameMeta =
-      const VerificationMeta('elapsedTimeEndgame');
   @override
-  late final GeneratedColumn<int> elapsedTimeEndgame = GeneratedColumn<int>(
+  late final GeneratedColumnWithTypeConverter<Duration?, int>
+  elapsedTimeEndgame = GeneratedColumn<int>(
     'elapsed_time_endgame',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
+    requiredDuringInsert: false,
+  ).withConverter<Duration?>($ScoutReportsTable.$converterelapsedTimeEndgame);
   @override
-  late final GeneratedColumnWithTypeConverter<List<bool>, String>
+  late final GeneratedColumnWithTypeConverter<List<bool?>, String>
   isCheckedSubmit = GeneratedColumn<String>(
     'is_checked_submit',
     aliasedName,
@@ -245,15 +244,15 @@ class $ScoutReportsTable extends ScoutReports
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     defaultValue: const Constant('[]'),
-  ).withConverter<List<bool>>($ScoutReportsTable.$converterisCheckedSubmit);
+  ).withConverter<List<bool?>>($ScoutReportsTable.$converterisCheckedSubmit);
   static const VerificationMeta _fuelMeta = const VerificationMeta('fuel');
   @override
-  late final GeneratedColumn<String> fuel = GeneratedColumn<String>(
+  late final GeneratedColumn<int> fuel = GeneratedColumn<int>(
     'fuel',
     aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _autoCommentsMeta = const VerificationMeta(
     'autoComments',
@@ -262,20 +261,20 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> autoComments = GeneratedColumn<String>(
     'auto_comments',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _beachedMeta = const VerificationMeta(
     'beached',
   );
   @override
-  late final GeneratedColumn<String> beached = GeneratedColumn<String>(
+  late final GeneratedColumn<int> beached = GeneratedColumn<int>(
     'beached',
     aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _commentsMeta = const VerificationMeta(
     'comments',
@@ -284,9 +283,9 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> comments = GeneratedColumn<String>(
     'comments',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _driverSkillMeta = const VerificationMeta(
     'driverSkill',
@@ -295,9 +294,9 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> driverSkill = GeneratedColumn<String>(
     'driver_skill',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _defenseSkillMeta = const VerificationMeta(
     'defenseSkill',
@@ -306,9 +305,9 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> defenseSkill = GeneratedColumn<String>(
     'defense_skill',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _speedSkillMeta = const VerificationMeta(
     'speedSkill',
@@ -317,9 +316,9 @@ class $ScoutReportsTable extends ScoutReports
   late final GeneratedColumn<String> speedSkill = GeneratedColumn<String>(
     'speed_skill',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   @override
   List<GeneratedColumn> get $columns => [
@@ -436,8 +435,6 @@ class $ScoutReportsTable extends ScoutReports
         _autonClimbMeta,
         autonClimb.isAcceptableOrUnknown(data['auton_climb']!, _autonClimbMeta),
       );
-    } else if (isInserting) {
-      context.missing(_autonClimbMeta);
     }
     if (data.containsKey('auton_flip')) {
       context.handle(
@@ -459,27 +456,12 @@ class $ScoutReportsTable extends ScoutReports
           _endgameClimbLevelMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_endgameClimbLevelMeta);
-    }
-    if (data.containsKey('elapsed_time_endgame')) {
-      context.handle(
-        _elapsedTimeEndgameMeta,
-        elapsedTimeEndgame.isAcceptableOrUnknown(
-          data['elapsed_time_endgame']!,
-          _elapsedTimeEndgameMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_elapsedTimeEndgameMeta);
     }
     if (data.containsKey('fuel')) {
       context.handle(
         _fuelMeta,
         fuel.isAcceptableOrUnknown(data['fuel']!, _fuelMeta),
       );
-    } else if (isInserting) {
-      context.missing(_fuelMeta);
     }
     if (data.containsKey('auto_comments')) {
       context.handle(
@@ -489,24 +471,18 @@ class $ScoutReportsTable extends ScoutReports
           _autoCommentsMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_autoCommentsMeta);
     }
     if (data.containsKey('beached')) {
       context.handle(
         _beachedMeta,
         beached.isAcceptableOrUnknown(data['beached']!, _beachedMeta),
       );
-    } else if (isInserting) {
-      context.missing(_beachedMeta);
     }
     if (data.containsKey('comments')) {
       context.handle(
         _commentsMeta,
         comments.isAcceptableOrUnknown(data['comments']!, _commentsMeta),
       );
-    } else if (isInserting) {
-      context.missing(_commentsMeta);
     }
     if (data.containsKey('driver_skill')) {
       context.handle(
@@ -516,8 +492,6 @@ class $ScoutReportsTable extends ScoutReports
           _driverSkillMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_driverSkillMeta);
     }
     if (data.containsKey('defense_skill')) {
       context.handle(
@@ -527,16 +501,12 @@ class $ScoutReportsTable extends ScoutReports
           _defenseSkillMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_defenseSkillMeta);
     }
     if (data.containsKey('speed_skill')) {
       context.handle(
         _speedSkillMeta,
         speedSkill.isAcceptableOrUnknown(data['speed_skill']!, _speedSkillMeta),
       );
-    } else if (isInserting) {
-      context.missing(_speedSkillMeta);
     }
     return context;
   }
@@ -592,7 +562,7 @@ class $ScoutReportsTable extends ScoutReports
       autonClimb: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}auton_climb'],
-      )!,
+      ),
       isCheckedAuton: $ScoutReportsTable.$converterisCheckedAuton.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -640,11 +610,14 @@ class $ScoutReportsTable extends ScoutReports
       endgameClimbLevel: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}endgame_climb_level'],
-      )!,
-      elapsedTimeEndgame: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}elapsed_time_endgame'],
-      )!,
+      ),
+      elapsedTimeEndgame: $ScoutReportsTable.$converterelapsedTimeEndgame
+          .fromSql(
+            attachedDatabase.typeMapping.read(
+              DriftSqlType.int,
+              data['${effectivePrefix}elapsed_time_endgame'],
+            ),
+          ),
       isCheckedSubmit: $ScoutReportsTable.$converterisCheckedSubmit.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -652,33 +625,33 @@ class $ScoutReportsTable extends ScoutReports
         )!,
       ),
       fuel: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.int,
         data['${effectivePrefix}fuel'],
-      )!,
+      ),
       autoComments: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}auto_comments'],
-      )!,
+      ),
       beached: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
+        DriftSqlType.int,
         data['${effectivePrefix}beached'],
-      )!,
+      ),
       comments: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}comments'],
-      )!,
+      ),
       driverSkill: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}driver_skill'],
-      )!,
+      ),
       defenseSkill: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}defense_skill'],
-      )!,
+      ),
       speedSkill: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}speed_skill'],
-      )!,
+      ),
     );
   }
 
@@ -689,19 +662,21 @@ class $ScoutReportsTable extends ScoutReports
 
   static TypeConverter<Duration?, int?> $converterelapsedTimeAuton =
       NullAwareTypeConverter.wrap(const DurationSecondsConverter());
-  static TypeConverter<List<bool>, String> $converterisCheckedAuton =
+  static TypeConverter<List<bool?>, String> $converterisCheckedAuton =
       const boolListConverter();
-  static TypeConverter<List<int>, String> $converterdxAuton =
-      const IntListConverter();
-  static TypeConverter<List<int>, String> $converterdyAuton =
-      const IntListConverter();
-  static TypeConverter<List<int>, String> $converterisCheckedTeleop =
-      const IntListConverter();
-  static TypeConverter<List<int>, String> $converterdxTeleop =
-      const IntListConverter();
-  static TypeConverter<List<int>, String> $converterdyTeleop =
-      const IntListConverter();
-  static TypeConverter<List<bool>, String> $converterisCheckedSubmit =
+  static TypeConverter<List<double?>, String> $converterdxAuton =
+      const DoubleListConverter();
+  static TypeConverter<List<double?>, String> $converterdyAuton =
+      const DoubleListConverter();
+  static TypeConverter<List<bool?>, String> $converterisCheckedTeleop =
+      const boolListConverter();
+  static TypeConverter<List<double?>, String> $converterdxTeleop =
+      const DoubleListConverter();
+  static TypeConverter<List<double?>, String> $converterdyTeleop =
+      const DoubleListConverter();
+  static TypeConverter<Duration?, int?> $converterelapsedTimeEndgame =
+      NullAwareTypeConverter.wrap(const DurationSecondsConverter());
+  static TypeConverter<List<bool?>, String> $converterisCheckedSubmit =
       const boolListConverter();
 }
 
@@ -716,25 +691,25 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
   final double? dx;
   final double? dy;
   final Duration? elapsedTimeAuton;
-  final String autonClimb;
-  final List<bool> isCheckedAuton;
-  final List<int> dxAuton;
-  final List<int> dyAuton;
+  final String? autonClimb;
+  final List<bool?> isCheckedAuton;
+  final List<double?> dxAuton;
+  final List<double?> dyAuton;
   final bool autonFlip;
-  final List<int> isCheckedTeleop;
-  final List<int> dxTeleop;
-  final List<int> dyTeleop;
+  final List<bool?> isCheckedTeleop;
+  final List<double?> dxTeleop;
+  final List<double?> dyTeleop;
   final bool teleopFlip;
-  final String endgameClimbLevel;
-  final int elapsedTimeEndgame;
-  final List<bool> isCheckedSubmit;
-  final String fuel;
-  final String autoComments;
-  final String beached;
-  final String comments;
-  final String driverSkill;
-  final String defenseSkill;
-  final String speedSkill;
+  final String? endgameClimbLevel;
+  final Duration? elapsedTimeEndgame;
+  final List<bool?> isCheckedSubmit;
+  final int? fuel;
+  final String? autoComments;
+  final int? beached;
+  final String? comments;
+  final String? driverSkill;
+  final String? defenseSkill;
+  final String? speedSkill;
   const ScoutReport({
     required this.username,
     required this.uuid,
@@ -746,7 +721,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     this.dx,
     this.dy,
     this.elapsedTimeAuton,
-    required this.autonClimb,
+    this.autonClimb,
     required this.isCheckedAuton,
     required this.dxAuton,
     required this.dyAuton,
@@ -755,16 +730,16 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     required this.dxTeleop,
     required this.dyTeleop,
     required this.teleopFlip,
-    required this.endgameClimbLevel,
-    required this.elapsedTimeEndgame,
+    this.endgameClimbLevel,
+    this.elapsedTimeEndgame,
     required this.isCheckedSubmit,
-    required this.fuel,
-    required this.autoComments,
-    required this.beached,
-    required this.comments,
-    required this.driverSkill,
-    required this.defenseSkill,
-    required this.speedSkill,
+    this.fuel,
+    this.autoComments,
+    this.beached,
+    this.comments,
+    this.driverSkill,
+    this.defenseSkill,
+    this.speedSkill,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -787,7 +762,9 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
         $ScoutReportsTable.$converterelapsedTimeAuton.toSql(elapsedTimeAuton),
       );
     }
-    map['auton_climb'] = Variable<String>(autonClimb);
+    if (!nullToAbsent || autonClimb != null) {
+      map['auton_climb'] = Variable<String>(autonClimb);
+    }
     {
       map['is_checked_auton'] = Variable<String>(
         $ScoutReportsTable.$converterisCheckedAuton.toSql(isCheckedAuton),
@@ -820,20 +797,42 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       );
     }
     map['teleop_flip'] = Variable<bool>(teleopFlip);
-    map['endgame_climb_level'] = Variable<String>(endgameClimbLevel);
-    map['elapsed_time_endgame'] = Variable<int>(elapsedTimeEndgame);
+    if (!nullToAbsent || endgameClimbLevel != null) {
+      map['endgame_climb_level'] = Variable<String>(endgameClimbLevel);
+    }
+    if (!nullToAbsent || elapsedTimeEndgame != null) {
+      map['elapsed_time_endgame'] = Variable<int>(
+        $ScoutReportsTable.$converterelapsedTimeEndgame.toSql(
+          elapsedTimeEndgame,
+        ),
+      );
+    }
     {
       map['is_checked_submit'] = Variable<String>(
         $ScoutReportsTable.$converterisCheckedSubmit.toSql(isCheckedSubmit),
       );
     }
-    map['fuel'] = Variable<String>(fuel);
-    map['auto_comments'] = Variable<String>(autoComments);
-    map['beached'] = Variable<String>(beached);
-    map['comments'] = Variable<String>(comments);
-    map['driver_skill'] = Variable<String>(driverSkill);
-    map['defense_skill'] = Variable<String>(defenseSkill);
-    map['speed_skill'] = Variable<String>(speedSkill);
+    if (!nullToAbsent || fuel != null) {
+      map['fuel'] = Variable<int>(fuel);
+    }
+    if (!nullToAbsent || autoComments != null) {
+      map['auto_comments'] = Variable<String>(autoComments);
+    }
+    if (!nullToAbsent || beached != null) {
+      map['beached'] = Variable<int>(beached);
+    }
+    if (!nullToAbsent || comments != null) {
+      map['comments'] = Variable<String>(comments);
+    }
+    if (!nullToAbsent || driverSkill != null) {
+      map['driver_skill'] = Variable<String>(driverSkill);
+    }
+    if (!nullToAbsent || defenseSkill != null) {
+      map['defense_skill'] = Variable<String>(defenseSkill);
+    }
+    if (!nullToAbsent || speedSkill != null) {
+      map['speed_skill'] = Variable<String>(speedSkill);
+    }
     return map;
   }
 
@@ -851,7 +850,9 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       elapsedTimeAuton: elapsedTimeAuton == null && nullToAbsent
           ? const Value.absent()
           : Value(elapsedTimeAuton),
-      autonClimb: Value(autonClimb),
+      autonClimb: autonClimb == null && nullToAbsent
+          ? const Value.absent()
+          : Value(autonClimb),
       isCheckedAuton: Value(isCheckedAuton),
       dxAuton: Value(dxAuton),
       dyAuton: Value(dyAuton),
@@ -860,16 +861,32 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       dxTeleop: Value(dxTeleop),
       dyTeleop: Value(dyTeleop),
       teleopFlip: Value(teleopFlip),
-      endgameClimbLevel: Value(endgameClimbLevel),
-      elapsedTimeEndgame: Value(elapsedTimeEndgame),
+      endgameClimbLevel: endgameClimbLevel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endgameClimbLevel),
+      elapsedTimeEndgame: elapsedTimeEndgame == null && nullToAbsent
+          ? const Value.absent()
+          : Value(elapsedTimeEndgame),
       isCheckedSubmit: Value(isCheckedSubmit),
-      fuel: Value(fuel),
-      autoComments: Value(autoComments),
-      beached: Value(beached),
-      comments: Value(comments),
-      driverSkill: Value(driverSkill),
-      defenseSkill: Value(defenseSkill),
-      speedSkill: Value(speedSkill),
+      fuel: fuel == null && nullToAbsent ? const Value.absent() : Value(fuel),
+      autoComments: autoComments == null && nullToAbsent
+          ? const Value.absent()
+          : Value(autoComments),
+      beached: beached == null && nullToAbsent
+          ? const Value.absent()
+          : Value(beached),
+      comments: comments == null && nullToAbsent
+          ? const Value.absent()
+          : Value(comments),
+      driverSkill: driverSkill == null && nullToAbsent
+          ? const Value.absent()
+          : Value(driverSkill),
+      defenseSkill: defenseSkill == null && nullToAbsent
+          ? const Value.absent()
+          : Value(defenseSkill),
+      speedSkill: speedSkill == null && nullToAbsent
+          ? const Value.absent()
+          : Value(speedSkill),
     );
   }
 
@@ -891,25 +908,33 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       elapsedTimeAuton: serializer.fromJson<Duration?>(
         json['elapsedTimeAuton'],
       ),
-      autonClimb: serializer.fromJson<String>(json['autonClimb']),
-      isCheckedAuton: serializer.fromJson<List<bool>>(json['isCheckedAuton']),
-      dxAuton: serializer.fromJson<List<int>>(json['dxAuton']),
-      dyAuton: serializer.fromJson<List<int>>(json['dyAuton']),
+      autonClimb: serializer.fromJson<String?>(json['autonClimb']),
+      isCheckedAuton: serializer.fromJson<List<bool?>>(json['isCheckedAuton']),
+      dxAuton: serializer.fromJson<List<double?>>(json['dxAuton']),
+      dyAuton: serializer.fromJson<List<double?>>(json['dyAuton']),
       autonFlip: serializer.fromJson<bool>(json['autonFlip']),
-      isCheckedTeleop: serializer.fromJson<List<int>>(json['isCheckedTeleop']),
-      dxTeleop: serializer.fromJson<List<int>>(json['dxTeleop']),
-      dyTeleop: serializer.fromJson<List<int>>(json['dyTeleop']),
+      isCheckedTeleop: serializer.fromJson<List<bool?>>(
+        json['isCheckedTeleop'],
+      ),
+      dxTeleop: serializer.fromJson<List<double?>>(json['dxTeleop']),
+      dyTeleop: serializer.fromJson<List<double?>>(json['dyTeleop']),
       teleopFlip: serializer.fromJson<bool>(json['teleopFlip']),
-      endgameClimbLevel: serializer.fromJson<String>(json['endgameClimbLevel']),
-      elapsedTimeEndgame: serializer.fromJson<int>(json['elapsedTimeEndgame']),
-      isCheckedSubmit: serializer.fromJson<List<bool>>(json['isCheckedSubmit']),
-      fuel: serializer.fromJson<String>(json['fuel']),
-      autoComments: serializer.fromJson<String>(json['autoComments']),
-      beached: serializer.fromJson<String>(json['beached']),
-      comments: serializer.fromJson<String>(json['comments']),
-      driverSkill: serializer.fromJson<String>(json['driverSkill']),
-      defenseSkill: serializer.fromJson<String>(json['defenseSkill']),
-      speedSkill: serializer.fromJson<String>(json['speedSkill']),
+      endgameClimbLevel: serializer.fromJson<String?>(
+        json['endgameClimbLevel'],
+      ),
+      elapsedTimeEndgame: serializer.fromJson<Duration?>(
+        json['elapsedTimeEndgame'],
+      ),
+      isCheckedSubmit: serializer.fromJson<List<bool?>>(
+        json['isCheckedSubmit'],
+      ),
+      fuel: serializer.fromJson<int?>(json['fuel']),
+      autoComments: serializer.fromJson<String?>(json['autoComments']),
+      beached: serializer.fromJson<int?>(json['beached']),
+      comments: serializer.fromJson<String?>(json['comments']),
+      driverSkill: serializer.fromJson<String?>(json['driverSkill']),
+      defenseSkill: serializer.fromJson<String?>(json['defenseSkill']),
+      speedSkill: serializer.fromJson<String?>(json['speedSkill']),
     );
   }
   @override
@@ -926,25 +951,25 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
       'dx': serializer.toJson<double?>(dx),
       'dy': serializer.toJson<double?>(dy),
       'elapsedTimeAuton': serializer.toJson<Duration?>(elapsedTimeAuton),
-      'autonClimb': serializer.toJson<String>(autonClimb),
-      'isCheckedAuton': serializer.toJson<List<bool>>(isCheckedAuton),
-      'dxAuton': serializer.toJson<List<int>>(dxAuton),
-      'dyAuton': serializer.toJson<List<int>>(dyAuton),
+      'autonClimb': serializer.toJson<String?>(autonClimb),
+      'isCheckedAuton': serializer.toJson<List<bool?>>(isCheckedAuton),
+      'dxAuton': serializer.toJson<List<double?>>(dxAuton),
+      'dyAuton': serializer.toJson<List<double?>>(dyAuton),
       'autonFlip': serializer.toJson<bool>(autonFlip),
-      'isCheckedTeleop': serializer.toJson<List<int>>(isCheckedTeleop),
-      'dxTeleop': serializer.toJson<List<int>>(dxTeleop),
-      'dyTeleop': serializer.toJson<List<int>>(dyTeleop),
+      'isCheckedTeleop': serializer.toJson<List<bool?>>(isCheckedTeleop),
+      'dxTeleop': serializer.toJson<List<double?>>(dxTeleop),
+      'dyTeleop': serializer.toJson<List<double?>>(dyTeleop),
       'teleopFlip': serializer.toJson<bool>(teleopFlip),
-      'endgameClimbLevel': serializer.toJson<String>(endgameClimbLevel),
-      'elapsedTimeEndgame': serializer.toJson<int>(elapsedTimeEndgame),
-      'isCheckedSubmit': serializer.toJson<List<bool>>(isCheckedSubmit),
-      'fuel': serializer.toJson<String>(fuel),
-      'autoComments': serializer.toJson<String>(autoComments),
-      'beached': serializer.toJson<String>(beached),
-      'comments': serializer.toJson<String>(comments),
-      'driverSkill': serializer.toJson<String>(driverSkill),
-      'defenseSkill': serializer.toJson<String>(defenseSkill),
-      'speedSkill': serializer.toJson<String>(speedSkill),
+      'endgameClimbLevel': serializer.toJson<String?>(endgameClimbLevel),
+      'elapsedTimeEndgame': serializer.toJson<Duration?>(elapsedTimeEndgame),
+      'isCheckedSubmit': serializer.toJson<List<bool?>>(isCheckedSubmit),
+      'fuel': serializer.toJson<int?>(fuel),
+      'autoComments': serializer.toJson<String?>(autoComments),
+      'beached': serializer.toJson<int?>(beached),
+      'comments': serializer.toJson<String?>(comments),
+      'driverSkill': serializer.toJson<String?>(driverSkill),
+      'defenseSkill': serializer.toJson<String?>(defenseSkill),
+      'speedSkill': serializer.toJson<String?>(speedSkill),
     };
   }
 
@@ -959,25 +984,25 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     Value<double?> dx = const Value.absent(),
     Value<double?> dy = const Value.absent(),
     Value<Duration?> elapsedTimeAuton = const Value.absent(),
-    String? autonClimb,
-    List<bool>? isCheckedAuton,
-    List<int>? dxAuton,
-    List<int>? dyAuton,
+    Value<String?> autonClimb = const Value.absent(),
+    List<bool?>? isCheckedAuton,
+    List<double?>? dxAuton,
+    List<double?>? dyAuton,
     bool? autonFlip,
-    List<int>? isCheckedTeleop,
-    List<int>? dxTeleop,
-    List<int>? dyTeleop,
+    List<bool?>? isCheckedTeleop,
+    List<double?>? dxTeleop,
+    List<double?>? dyTeleop,
     bool? teleopFlip,
-    String? endgameClimbLevel,
-    int? elapsedTimeEndgame,
-    List<bool>? isCheckedSubmit,
-    String? fuel,
-    String? autoComments,
-    String? beached,
-    String? comments,
-    String? driverSkill,
-    String? defenseSkill,
-    String? speedSkill,
+    Value<String?> endgameClimbLevel = const Value.absent(),
+    Value<Duration?> elapsedTimeEndgame = const Value.absent(),
+    List<bool?>? isCheckedSubmit,
+    Value<int?> fuel = const Value.absent(),
+    Value<String?> autoComments = const Value.absent(),
+    Value<int?> beached = const Value.absent(),
+    Value<String?> comments = const Value.absent(),
+    Value<String?> driverSkill = const Value.absent(),
+    Value<String?> defenseSkill = const Value.absent(),
+    Value<String?> speedSkill = const Value.absent(),
   }) => ScoutReport(
     username: username ?? this.username,
     uuid: uuid ?? this.uuid,
@@ -991,7 +1016,7 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     elapsedTimeAuton: elapsedTimeAuton.present
         ? elapsedTimeAuton.value
         : this.elapsedTimeAuton,
-    autonClimb: autonClimb ?? this.autonClimb,
+    autonClimb: autonClimb.present ? autonClimb.value : this.autonClimb,
     isCheckedAuton: isCheckedAuton ?? this.isCheckedAuton,
     dxAuton: dxAuton ?? this.dxAuton,
     dyAuton: dyAuton ?? this.dyAuton,
@@ -1000,16 +1025,20 @@ class ScoutReport extends DataClass implements Insertable<ScoutReport> {
     dxTeleop: dxTeleop ?? this.dxTeleop,
     dyTeleop: dyTeleop ?? this.dyTeleop,
     teleopFlip: teleopFlip ?? this.teleopFlip,
-    endgameClimbLevel: endgameClimbLevel ?? this.endgameClimbLevel,
-    elapsedTimeEndgame: elapsedTimeEndgame ?? this.elapsedTimeEndgame,
+    endgameClimbLevel: endgameClimbLevel.present
+        ? endgameClimbLevel.value
+        : this.endgameClimbLevel,
+    elapsedTimeEndgame: elapsedTimeEndgame.present
+        ? elapsedTimeEndgame.value
+        : this.elapsedTimeEndgame,
     isCheckedSubmit: isCheckedSubmit ?? this.isCheckedSubmit,
-    fuel: fuel ?? this.fuel,
-    autoComments: autoComments ?? this.autoComments,
-    beached: beached ?? this.beached,
-    comments: comments ?? this.comments,
-    driverSkill: driverSkill ?? this.driverSkill,
-    defenseSkill: defenseSkill ?? this.defenseSkill,
-    speedSkill: speedSkill ?? this.speedSkill,
+    fuel: fuel.present ? fuel.value : this.fuel,
+    autoComments: autoComments.present ? autoComments.value : this.autoComments,
+    beached: beached.present ? beached.value : this.beached,
+    comments: comments.present ? comments.value : this.comments,
+    driverSkill: driverSkill.present ? driverSkill.value : this.driverSkill,
+    defenseSkill: defenseSkill.present ? defenseSkill.value : this.defenseSkill,
+    speedSkill: speedSkill.present ? speedSkill.value : this.speedSkill,
   );
   ScoutReport copyWithCompanion(ScoutReportsCompanion data) {
     return ScoutReport(
@@ -1191,25 +1220,25 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
   final Value<double?> dx;
   final Value<double?> dy;
   final Value<Duration?> elapsedTimeAuton;
-  final Value<String> autonClimb;
-  final Value<List<bool>> isCheckedAuton;
-  final Value<List<int>> dxAuton;
-  final Value<List<int>> dyAuton;
+  final Value<String?> autonClimb;
+  final Value<List<bool?>> isCheckedAuton;
+  final Value<List<double?>> dxAuton;
+  final Value<List<double?>> dyAuton;
   final Value<bool> autonFlip;
-  final Value<List<int>> isCheckedTeleop;
-  final Value<List<int>> dxTeleop;
-  final Value<List<int>> dyTeleop;
+  final Value<List<bool?>> isCheckedTeleop;
+  final Value<List<double?>> dxTeleop;
+  final Value<List<double?>> dyTeleop;
   final Value<bool> teleopFlip;
-  final Value<String> endgameClimbLevel;
-  final Value<int> elapsedTimeEndgame;
-  final Value<List<bool>> isCheckedSubmit;
-  final Value<String> fuel;
-  final Value<String> autoComments;
-  final Value<String> beached;
-  final Value<String> comments;
-  final Value<String> driverSkill;
-  final Value<String> defenseSkill;
-  final Value<String> speedSkill;
+  final Value<String?> endgameClimbLevel;
+  final Value<Duration?> elapsedTimeEndgame;
+  final Value<List<bool?>> isCheckedSubmit;
+  final Value<int?> fuel;
+  final Value<String?> autoComments;
+  final Value<int?> beached;
+  final Value<String?> comments;
+  final Value<String?> driverSkill;
+  final Value<String?> defenseSkill;
+  final Value<String?> speedSkill;
   final Value<int> rowid;
   const ScoutReportsCompanion({
     this.username = const Value.absent(),
@@ -1254,7 +1283,7 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     this.dx = const Value.absent(),
     this.dy = const Value.absent(),
     this.elapsedTimeAuton = const Value.absent(),
-    required String autonClimb,
+    this.autonClimb = const Value.absent(),
     this.isCheckedAuton = const Value.absent(),
     this.dxAuton = const Value.absent(),
     this.dyAuton = const Value.absent(),
@@ -1263,33 +1292,23 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     this.dxTeleop = const Value.absent(),
     this.dyTeleop = const Value.absent(),
     this.teleopFlip = const Value.absent(),
-    required String endgameClimbLevel,
-    required int elapsedTimeEndgame,
+    this.endgameClimbLevel = const Value.absent(),
+    this.elapsedTimeEndgame = const Value.absent(),
     this.isCheckedSubmit = const Value.absent(),
-    required String fuel,
-    required String autoComments,
-    required String beached,
-    required String comments,
-    required String driverSkill,
-    required String defenseSkill,
-    required String speedSkill,
+    this.fuel = const Value.absent(),
+    this.autoComments = const Value.absent(),
+    this.beached = const Value.absent(),
+    this.comments = const Value.absent(),
+    this.driverSkill = const Value.absent(),
+    this.defenseSkill = const Value.absent(),
+    this.speedSkill = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : username = Value(username),
        uuid = Value(uuid),
        matchNumber = Value(matchNumber),
        teamNumber = Value(teamNumber),
        RobotPosition = Value(RobotPosition),
-       MatchLevel = Value(MatchLevel),
-       autonClimb = Value(autonClimb),
-       endgameClimbLevel = Value(endgameClimbLevel),
-       elapsedTimeEndgame = Value(elapsedTimeEndgame),
-       fuel = Value(fuel),
-       autoComments = Value(autoComments),
-       beached = Value(beached),
-       comments = Value(comments),
-       driverSkill = Value(driverSkill),
-       defenseSkill = Value(defenseSkill),
-       speedSkill = Value(speedSkill);
+       MatchLevel = Value(MatchLevel);
   static Insertable<ScoutReport> custom({
     Expression<String>? username,
     Expression<String>? uuid,
@@ -1313,9 +1332,9 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     Expression<String>? endgameClimbLevel,
     Expression<int>? elapsedTimeEndgame,
     Expression<String>? isCheckedSubmit,
-    Expression<String>? fuel,
+    Expression<int>? fuel,
     Expression<String>? autoComments,
-    Expression<String>? beached,
+    Expression<int>? beached,
     Expression<String>? comments,
     Expression<String>? driverSkill,
     Expression<String>? defenseSkill,
@@ -1368,25 +1387,25 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
     Value<double?>? dx,
     Value<double?>? dy,
     Value<Duration?>? elapsedTimeAuton,
-    Value<String>? autonClimb,
-    Value<List<bool>>? isCheckedAuton,
-    Value<List<int>>? dxAuton,
-    Value<List<int>>? dyAuton,
+    Value<String?>? autonClimb,
+    Value<List<bool?>>? isCheckedAuton,
+    Value<List<double?>>? dxAuton,
+    Value<List<double?>>? dyAuton,
     Value<bool>? autonFlip,
-    Value<List<int>>? isCheckedTeleop,
-    Value<List<int>>? dxTeleop,
-    Value<List<int>>? dyTeleop,
+    Value<List<bool?>>? isCheckedTeleop,
+    Value<List<double?>>? dxTeleop,
+    Value<List<double?>>? dyTeleop,
     Value<bool>? teleopFlip,
-    Value<String>? endgameClimbLevel,
-    Value<int>? elapsedTimeEndgame,
-    Value<List<bool>>? isCheckedSubmit,
-    Value<String>? fuel,
-    Value<String>? autoComments,
-    Value<String>? beached,
-    Value<String>? comments,
-    Value<String>? driverSkill,
-    Value<String>? defenseSkill,
-    Value<String>? speedSkill,
+    Value<String?>? endgameClimbLevel,
+    Value<Duration?>? elapsedTimeEndgame,
+    Value<List<bool?>>? isCheckedSubmit,
+    Value<int?>? fuel,
+    Value<String?>? autoComments,
+    Value<int?>? beached,
+    Value<String?>? comments,
+    Value<String?>? driverSkill,
+    Value<String?>? defenseSkill,
+    Value<String?>? speedSkill,
     Value<int>? rowid,
   }) {
     return ScoutReportsCompanion(
@@ -1505,7 +1524,11 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
       map['endgame_climb_level'] = Variable<String>(endgameClimbLevel.value);
     }
     if (elapsedTimeEndgame.present) {
-      map['elapsed_time_endgame'] = Variable<int>(elapsedTimeEndgame.value);
+      map['elapsed_time_endgame'] = Variable<int>(
+        $ScoutReportsTable.$converterelapsedTimeEndgame.toSql(
+          elapsedTimeEndgame.value,
+        ),
+      );
     }
     if (isCheckedSubmit.present) {
       map['is_checked_submit'] = Variable<String>(
@@ -1515,13 +1538,13 @@ class ScoutReportsCompanion extends UpdateCompanion<ScoutReport> {
       );
     }
     if (fuel.present) {
-      map['fuel'] = Variable<String>(fuel.value);
+      map['fuel'] = Variable<int>(fuel.value);
     }
     if (autoComments.present) {
       map['auto_comments'] = Variable<String>(autoComments.value);
     }
     if (beached.present) {
-      map['beached'] = Variable<String>(beached.value);
+      map['beached'] = Variable<int>(beached.value);
     }
     if (comments.present) {
       map['comments'] = Variable<String>(comments.value);
@@ -1602,25 +1625,25 @@ typedef $$ScoutReportsTableCreateCompanionBuilder =
       Value<double?> dx,
       Value<double?> dy,
       Value<Duration?> elapsedTimeAuton,
-      required String autonClimb,
-      Value<List<bool>> isCheckedAuton,
-      Value<List<int>> dxAuton,
-      Value<List<int>> dyAuton,
+      Value<String?> autonClimb,
+      Value<List<bool?>> isCheckedAuton,
+      Value<List<double?>> dxAuton,
+      Value<List<double?>> dyAuton,
       Value<bool> autonFlip,
-      Value<List<int>> isCheckedTeleop,
-      Value<List<int>> dxTeleop,
-      Value<List<int>> dyTeleop,
+      Value<List<bool?>> isCheckedTeleop,
+      Value<List<double?>> dxTeleop,
+      Value<List<double?>> dyTeleop,
       Value<bool> teleopFlip,
-      required String endgameClimbLevel,
-      required int elapsedTimeEndgame,
-      Value<List<bool>> isCheckedSubmit,
-      required String fuel,
-      required String autoComments,
-      required String beached,
-      required String comments,
-      required String driverSkill,
-      required String defenseSkill,
-      required String speedSkill,
+      Value<String?> endgameClimbLevel,
+      Value<Duration?> elapsedTimeEndgame,
+      Value<List<bool?>> isCheckedSubmit,
+      Value<int?> fuel,
+      Value<String?> autoComments,
+      Value<int?> beached,
+      Value<String?> comments,
+      Value<String?> driverSkill,
+      Value<String?> defenseSkill,
+      Value<String?> speedSkill,
       Value<int> rowid,
     });
 typedef $$ScoutReportsTableUpdateCompanionBuilder =
@@ -1635,25 +1658,25 @@ typedef $$ScoutReportsTableUpdateCompanionBuilder =
       Value<double?> dx,
       Value<double?> dy,
       Value<Duration?> elapsedTimeAuton,
-      Value<String> autonClimb,
-      Value<List<bool>> isCheckedAuton,
-      Value<List<int>> dxAuton,
-      Value<List<int>> dyAuton,
+      Value<String?> autonClimb,
+      Value<List<bool?>> isCheckedAuton,
+      Value<List<double?>> dxAuton,
+      Value<List<double?>> dyAuton,
       Value<bool> autonFlip,
-      Value<List<int>> isCheckedTeleop,
-      Value<List<int>> dxTeleop,
-      Value<List<int>> dyTeleop,
+      Value<List<bool?>> isCheckedTeleop,
+      Value<List<double?>> dxTeleop,
+      Value<List<double?>> dyTeleop,
       Value<bool> teleopFlip,
-      Value<String> endgameClimbLevel,
-      Value<int> elapsedTimeEndgame,
-      Value<List<bool>> isCheckedSubmit,
-      Value<String> fuel,
-      Value<String> autoComments,
-      Value<String> beached,
-      Value<String> comments,
-      Value<String> driverSkill,
-      Value<String> defenseSkill,
-      Value<String> speedSkill,
+      Value<String?> endgameClimbLevel,
+      Value<Duration?> elapsedTimeEndgame,
+      Value<List<bool?>> isCheckedSubmit,
+      Value<int?> fuel,
+      Value<String?> autoComments,
+      Value<int?> beached,
+      Value<String?> comments,
+      Value<String?> driverSkill,
+      Value<String?> defenseSkill,
+      Value<String?> speedSkill,
       Value<int> rowid,
     });
 
@@ -1722,46 +1745,46 @@ class $$ScoutReportsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<bool>, List<bool>, String>
+  ColumnWithTypeConverterFilters<List<bool?>, List<bool>, String>
   get isCheckedAuton => $composableBuilder(
     column: $table.isCheckedAuton,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String> get dxAuton =>
-      $composableBuilder(
-        column: $table.dxAuton,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnWithTypeConverterFilters<List<double?>, List<double>, String>
+  get dxAuton => $composableBuilder(
+    column: $table.dxAuton,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String> get dyAuton =>
-      $composableBuilder(
-        column: $table.dyAuton,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnWithTypeConverterFilters<List<double?>, List<double>, String>
+  get dyAuton => $composableBuilder(
+    column: $table.dyAuton,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
   ColumnFilters<bool> get autonFlip => $composableBuilder(
     column: $table.autonFlip,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
+  ColumnWithTypeConverterFilters<List<bool?>, List<bool>, String>
   get isCheckedTeleop => $composableBuilder(
     column: $table.isCheckedTeleop,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String> get dxTeleop =>
-      $composableBuilder(
-        column: $table.dxTeleop,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnWithTypeConverterFilters<List<double?>, List<double>, String>
+  get dxTeleop => $composableBuilder(
+    column: $table.dxTeleop,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
-  ColumnWithTypeConverterFilters<List<int>, List<int>, String> get dyTeleop =>
-      $composableBuilder(
-        column: $table.dyTeleop,
-        builder: (column) => ColumnWithTypeConverterFilters(column),
-      );
+  ColumnWithTypeConverterFilters<List<double?>, List<double>, String>
+  get dyTeleop => $composableBuilder(
+    column: $table.dyTeleop,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
 
   ColumnFilters<bool> get teleopFlip => $composableBuilder(
     column: $table.teleopFlip,
@@ -1773,18 +1796,19 @@ class $$ScoutReportsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get elapsedTimeEndgame => $composableBuilder(
+  ColumnWithTypeConverterFilters<Duration?, Duration, int>
+  get elapsedTimeEndgame => $composableBuilder(
     column: $table.elapsedTimeEndgame,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<List<bool>, List<bool>, String>
+  ColumnWithTypeConverterFilters<List<bool?>, List<bool>, String>
   get isCheckedSubmit => $composableBuilder(
     column: $table.isCheckedSubmit,
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnFilters<String> get fuel => $composableBuilder(
+  ColumnFilters<int> get fuel => $composableBuilder(
     column: $table.fuel,
     builder: (column) => ColumnFilters(column),
   );
@@ -1794,7 +1818,7 @@ class $$ScoutReportsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get beached => $composableBuilder(
+  ColumnFilters<int> get beached => $composableBuilder(
     column: $table.beached,
     builder: (column) => ColumnFilters(column),
   );
@@ -1939,7 +1963,7 @@ class $$ScoutReportsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get fuel => $composableBuilder(
+  ColumnOrderings<int> get fuel => $composableBuilder(
     column: $table.fuel,
     builder: (column) => ColumnOrderings(column),
   );
@@ -1949,7 +1973,7 @@ class $$ScoutReportsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get beached => $composableBuilder(
+  ColumnOrderings<int> get beached => $composableBuilder(
     column: $table.beached,
     builder: (column) => ColumnOrderings(column),
   );
@@ -2030,31 +2054,31 @@ class $$ScoutReportsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumnWithTypeConverter<List<bool>, String> get isCheckedAuton =>
+  GeneratedColumnWithTypeConverter<List<bool?>, String> get isCheckedAuton =>
       $composableBuilder(
         column: $table.isCheckedAuton,
         builder: (column) => column,
       );
 
-  GeneratedColumnWithTypeConverter<List<int>, String> get dxAuton =>
+  GeneratedColumnWithTypeConverter<List<double?>, String> get dxAuton =>
       $composableBuilder(column: $table.dxAuton, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<int>, String> get dyAuton =>
+  GeneratedColumnWithTypeConverter<List<double?>, String> get dyAuton =>
       $composableBuilder(column: $table.dyAuton, builder: (column) => column);
 
   GeneratedColumn<bool> get autonFlip =>
       $composableBuilder(column: $table.autonFlip, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<int>, String> get isCheckedTeleop =>
+  GeneratedColumnWithTypeConverter<List<bool?>, String> get isCheckedTeleop =>
       $composableBuilder(
         column: $table.isCheckedTeleop,
         builder: (column) => column,
       );
 
-  GeneratedColumnWithTypeConverter<List<int>, String> get dxTeleop =>
+  GeneratedColumnWithTypeConverter<List<double?>, String> get dxTeleop =>
       $composableBuilder(column: $table.dxTeleop, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<int>, String> get dyTeleop =>
+  GeneratedColumnWithTypeConverter<List<double?>, String> get dyTeleop =>
       $composableBuilder(column: $table.dyTeleop, builder: (column) => column);
 
   GeneratedColumn<bool> get teleopFlip => $composableBuilder(
@@ -2067,18 +2091,19 @@ class $$ScoutReportsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get elapsedTimeEndgame => $composableBuilder(
-    column: $table.elapsedTimeEndgame,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<Duration?, int> get elapsedTimeEndgame =>
+      $composableBuilder(
+        column: $table.elapsedTimeEndgame,
+        builder: (column) => column,
+      );
 
-  GeneratedColumnWithTypeConverter<List<bool>, String> get isCheckedSubmit =>
+  GeneratedColumnWithTypeConverter<List<bool?>, String> get isCheckedSubmit =>
       $composableBuilder(
         column: $table.isCheckedSubmit,
         builder: (column) => column,
       );
 
-  GeneratedColumn<String> get fuel =>
+  GeneratedColumn<int> get fuel =>
       $composableBuilder(column: $table.fuel, builder: (column) => column);
 
   GeneratedColumn<String> get autoComments => $composableBuilder(
@@ -2086,7 +2111,7 @@ class $$ScoutReportsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get beached =>
+  GeneratedColumn<int> get beached =>
       $composableBuilder(column: $table.beached, builder: (column) => column);
 
   GeneratedColumn<String> get comments =>
@@ -2149,25 +2174,25 @@ class $$ScoutReportsTableTableManager
                 Value<double?> dx = const Value.absent(),
                 Value<double?> dy = const Value.absent(),
                 Value<Duration?> elapsedTimeAuton = const Value.absent(),
-                Value<String> autonClimb = const Value.absent(),
-                Value<List<bool>> isCheckedAuton = const Value.absent(),
-                Value<List<int>> dxAuton = const Value.absent(),
-                Value<List<int>> dyAuton = const Value.absent(),
+                Value<String?> autonClimb = const Value.absent(),
+                Value<List<bool?>> isCheckedAuton = const Value.absent(),
+                Value<List<double?>> dxAuton = const Value.absent(),
+                Value<List<double?>> dyAuton = const Value.absent(),
                 Value<bool> autonFlip = const Value.absent(),
-                Value<List<int>> isCheckedTeleop = const Value.absent(),
-                Value<List<int>> dxTeleop = const Value.absent(),
-                Value<List<int>> dyTeleop = const Value.absent(),
+                Value<List<bool?>> isCheckedTeleop = const Value.absent(),
+                Value<List<double?>> dxTeleop = const Value.absent(),
+                Value<List<double?>> dyTeleop = const Value.absent(),
                 Value<bool> teleopFlip = const Value.absent(),
-                Value<String> endgameClimbLevel = const Value.absent(),
-                Value<int> elapsedTimeEndgame = const Value.absent(),
-                Value<List<bool>> isCheckedSubmit = const Value.absent(),
-                Value<String> fuel = const Value.absent(),
-                Value<String> autoComments = const Value.absent(),
-                Value<String> beached = const Value.absent(),
-                Value<String> comments = const Value.absent(),
-                Value<String> driverSkill = const Value.absent(),
-                Value<String> defenseSkill = const Value.absent(),
-                Value<String> speedSkill = const Value.absent(),
+                Value<String?> endgameClimbLevel = const Value.absent(),
+                Value<Duration?> elapsedTimeEndgame = const Value.absent(),
+                Value<List<bool?>> isCheckedSubmit = const Value.absent(),
+                Value<int?> fuel = const Value.absent(),
+                Value<String?> autoComments = const Value.absent(),
+                Value<int?> beached = const Value.absent(),
+                Value<String?> comments = const Value.absent(),
+                Value<String?> driverSkill = const Value.absent(),
+                Value<String?> defenseSkill = const Value.absent(),
+                Value<String?> speedSkill = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ScoutReportsCompanion(
                 username: username,
@@ -2213,25 +2238,25 @@ class $$ScoutReportsTableTableManager
                 Value<double?> dx = const Value.absent(),
                 Value<double?> dy = const Value.absent(),
                 Value<Duration?> elapsedTimeAuton = const Value.absent(),
-                required String autonClimb,
-                Value<List<bool>> isCheckedAuton = const Value.absent(),
-                Value<List<int>> dxAuton = const Value.absent(),
-                Value<List<int>> dyAuton = const Value.absent(),
+                Value<String?> autonClimb = const Value.absent(),
+                Value<List<bool?>> isCheckedAuton = const Value.absent(),
+                Value<List<double?>> dxAuton = const Value.absent(),
+                Value<List<double?>> dyAuton = const Value.absent(),
                 Value<bool> autonFlip = const Value.absent(),
-                Value<List<int>> isCheckedTeleop = const Value.absent(),
-                Value<List<int>> dxTeleop = const Value.absent(),
-                Value<List<int>> dyTeleop = const Value.absent(),
+                Value<List<bool?>> isCheckedTeleop = const Value.absent(),
+                Value<List<double?>> dxTeleop = const Value.absent(),
+                Value<List<double?>> dyTeleop = const Value.absent(),
                 Value<bool> teleopFlip = const Value.absent(),
-                required String endgameClimbLevel,
-                required int elapsedTimeEndgame,
-                Value<List<bool>> isCheckedSubmit = const Value.absent(),
-                required String fuel,
-                required String autoComments,
-                required String beached,
-                required String comments,
-                required String driverSkill,
-                required String defenseSkill,
-                required String speedSkill,
+                Value<String?> endgameClimbLevel = const Value.absent(),
+                Value<Duration?> elapsedTimeEndgame = const Value.absent(),
+                Value<List<bool?>> isCheckedSubmit = const Value.absent(),
+                Value<int?> fuel = const Value.absent(),
+                Value<String?> autoComments = const Value.absent(),
+                Value<int?> beached = const Value.absent(),
+                Value<String?> comments = const Value.absent(),
+                Value<String?> driverSkill = const Value.absent(),
+                Value<String?> defenseSkill = const Value.absent(),
+                Value<String?> speedSkill = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ScoutReportsCompanion.insert(
                 username: username,

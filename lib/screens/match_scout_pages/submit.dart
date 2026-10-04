@@ -8,11 +8,8 @@ import 'package:trioxygen/state.dart' show CounterProvider;
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:trioxygen/drift.dart';
-import 'package:drift/drift.dart';
+import 'package:drift/drift.dart' hide Column;
 class Submit extends StatefulWidget {
-  final AppDatabase database;
-  const Submit({super.key, required this.database});
-
   @override
   State<Submit> createState() => _SubmitState();
 }
@@ -327,7 +324,30 @@ class _SubmitState extends State<Submit> {
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
             foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
           ), onPressed: () async {
-            await widget.database.into(widget.database.scoutReports).insert(
+              final matchNum = int.tryParse(counter.matchNumber);
+              final teamNum = int.tryParse(counter.teamNumber);
+              final userName = counter.userName;
+              final robotPosition = counter.robotPosition.name;
+              final matchLevel = counter.matchLevel.name;
+
+          if (matchNum == null || teamNum == null || userName == '') {
+              showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+              title: const Text("Missing Data"),
+              content: const Text("geogrie nungu pungu will hurt you"),
+            actions: [
+              MaterialButton(
+                child: const Text("OK"),
+                onPressed: () => Navigator.of(context).pop(), 
+                ),
+                  ],
+                 ),
+                   );
+                  return; 
+                   }
+            final db = context.read<AppDatabase>();
+            await db.into(db.scoutReports).insert(
           ScoutReportsCompanion.insert(
           username: counter.userName,
           uuid: uuid.v7(),
@@ -339,14 +359,40 @@ class _SubmitState extends State<Submit> {
           dx: Value(counter.dx),
           dy: Value(counter.dy),
           elapsedTimeAuton: Value(counter.elapsedTimeAuton),
-          autonClimb: counter.autonClimb.name,
-          
-          
-
-
-
+          autonClimb: Value(counter.autonClimb?.name),
+          isCheckedAuton: Value(counter.isCheckedAuton),
+          dxAuton: Value(counter.dxAuton),
+          dyAuton: Value(counter.dyAuton),
+          autonFlip: Value(counter.autonFlip),
+          isCheckedTeleop: Value(counter.isCheckedTeleop),
+          dxTeleop: Value(counter.dxTeleop),
+          dyTeleop: Value(counter.dyTeleop),
+          teleopFlip: Value(counter.teleopFlip),
+          endgameClimbLevel: Value(counter.endgameClimbLevel.name),
+          elapsedTimeEndgame: Value(counter.elapsedTimeAuton),
+          isCheckedSubmit: Value(counter.isCheckedSubmit),
+          fuel: Value(int.tryParse(counter.fuel)),
+          autoComments: Value(counter.autoComments),
+          beached: Value(int.tryParse(counter.beached)),
+          comments: Value(counter.comments),
+          driverSkill: Value(counter.driverSkill.name),
+          defenseSkill: Value(counter.defenseSkill.name),
+          speedSkill: Value(counter.speedSkill.name)
           ),
 );
+       showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text("Alert"),
+      content: const Text("Data Submitted"),
+      actions: [
+        MaterialButton(
+          child: const Text("OK"),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
+    ),
+  );
           }, child: const Text("Submit"))),                       
         ],),))));
     

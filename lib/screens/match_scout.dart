@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trioxygen/screens/data.dart' show DataView;
+import 'package:trioxygen/screens/drawer.dart' show DrawerMe;
 import 'package:trioxygen/screens/pit_scout.dart' show PitScout;
 import 'package:trioxygen/screens/dashboard.dart' show Dashboard;
 import 'package:trioxygen/screens/settings.dart' show Settings;
@@ -16,8 +17,6 @@ import 'package:trioxygen/screens/match_scout_pages/teleop_entry.dart' show Tele
 import 'package:trioxygen/screens/match_scout_pages/submit.dart' show Submit;
 
 class MatchScout extends StatelessWidget {
-  final AppDatabase database;
-  const MatchScout({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) {
@@ -51,78 +50,13 @@ class MatchScout extends StatelessWidget {
               AutonPage(),
               TeleopPage(),
               EndgameEntry(),
-              Submit(database: database,)
+              Submit()
             ],
           ),
         ),
       ),
     ),
-      drawer: Drawer(child: ListView(
-        padding: EdgeInsets.zero,
-        children: [ListTile(
-          title: const Text("Match Scout"),
-          onTap: (){
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => MatchScout(database: database),
-              ),
-            );
-
-          },
-        ),
-        ListTile(
-          title: const Text("Pit Scout"),
-          onTap: (){
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => PitScout(database: database),
-              ),
-            );
-
-          },
-        ),
-        ListTile(
-          title: const Text("Dashboard"),
-          onTap: (){
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => Dashboard(database: database),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          title: const Text("DataView"),
-          onTap: (){
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => DataView(database: database),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          title: const Text("Settings"),
-          onTap: (){
-          Navigator.pop(context);
-          Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => Settings(database: database),
-              ),
-            );
-
-          },
-        )],
-        )
+      drawer: Drawer(child:DrawerMe()
         ),
       );
   }

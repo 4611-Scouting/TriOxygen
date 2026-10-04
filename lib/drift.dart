@@ -34,7 +34,20 @@ class IntListConverter extends TypeConverter<List<int>, String> {
     return jsonEncode(value);
   }
 }
-class boolListConverter extends TypeConverter<List<bool>, String> {
+class DoubleListConverter extends TypeConverter<List<double?>, String> {
+  const DoubleListConverter();
+
+  @override
+  List<double> fromSql(String fromDb) {
+    return (jsonDecode(fromDb) as List).cast<double>();
+  }
+
+  @override
+  String toSql(List<double?> value) {
+    return jsonEncode(value);
+  }
+}
+class boolListConverter extends TypeConverter<List<bool?>, String> {
   const boolListConverter();
 
   @override
@@ -43,7 +56,7 @@ class boolListConverter extends TypeConverter<List<bool>, String> {
   }
 
   @override
-  String toSql(List<bool> value) {
+  String toSql(List<bool?> value) {
     return jsonEncode(value);
   }
 }
@@ -72,42 +85,44 @@ class ScoutReports extends Table{
 IntColumn get elapsedTimeAuton => integer()
     .nullable()
     .map(NullAwareTypeConverter.wrap(const DurationSecondsConverter()))();
-  TextColumn get autonClimb => text()();
+  TextColumn get autonClimb => text().nullable()();
   TextColumn get isCheckedAuton => text()
       .map(const boolListConverter())
       .withDefault(const Constant('[]'))();
   TextColumn get dxAuton => text()
-      .map(const IntListConverter())
+      .map(const DoubleListConverter())
       .withDefault(const Constant('[]'))();
   TextColumn get dyAuton => text()
-      .map(const IntListConverter())
+      .map(const DoubleListConverter())
       .withDefault(const Constant('[]'))();
   BoolColumn get autonFlip => boolean().withDefault(const Constant(false))();
 
   TextColumn get isCheckedTeleop => text()
-      .map(const IntListConverter())
+      .map(const boolListConverter())
       .withDefault(const Constant('[]'))();
   TextColumn get dxTeleop => text()
-      .map(const IntListConverter())
+      .map(const DoubleListConverter())
       .withDefault(const Constant('[]'))();
   TextColumn get dyTeleop => text()
-      .map(const IntListConverter())
+      .map(const DoubleListConverter())
       .withDefault(const Constant('[]'))();
   BoolColumn get teleopFlip => boolean().withDefault(const Constant(false))();
 
-  TextColumn get endgameClimbLevel => text()();
-  IntColumn get elapsedTimeEndgame => integer()();
+  TextColumn get endgameClimbLevel => text().nullable()();
+  IntColumn get elapsedTimeEndgame => integer()
+    .nullable()
+    .map(NullAwareTypeConverter.wrap(const DurationSecondsConverter()))();
 
   TextColumn get isCheckedSubmit => text()
       .map(const boolListConverter())
       .withDefault(const Constant('[]'))();
-  TextColumn get fuel => text()();
-  TextColumn get autoComments => text()();
-  TextColumn get beached => text()();
-  TextColumn get comments => text()();
-  TextColumn get driverSkill => text()();
-  TextColumn get defenseSkill => text()();
-  TextColumn get speedSkill => text()();
+  IntColumn get fuel => integer().nullable()();
+  TextColumn get autoComments => text().nullable()();
+  IntColumn get beached => integer().nullable()();
+  TextColumn get comments => text().nullable()();
+  TextColumn get driverSkill => text().nullable()();
+  TextColumn get defenseSkill => text().nullable()();
+  TextColumn get speedSkill => text().nullable()();
 }
 @DriftDatabase(tables: [ScoutReports])
 class AppDatabase extends _$AppDatabase {

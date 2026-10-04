@@ -4,20 +4,26 @@ import 'package:trioxygen/state.dart' show CounterProvider;
 import 'package:provider/provider.dart';
 import 'package:trioxygen/drift.dart';
 
+
 void main() {
-  final database = AppDatabase();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CounterProvider(),
-      child: MyApp(database: database),
+    MultiProvider(
+      providers: [
+              Provider<AppDatabase>(
+          create: (context) => AppDatabase(),
+          dispose: (context, db) => db.close(),
+        ),
+            ChangeNotifierProvider(
+      create: (context) => CounterProvider(),),
+      ],
+      child: MyApp(),
     ),
   );
 }
 
 
+
 class MyApp extends StatelessWidget {
-  final AppDatabase database;
-  const MyApp({super.key, required this.database});
 
   static const appTitle = 'TriOxygen Dev';
 
@@ -25,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appTitle,
-      home: MatchScout(database: database),
+      home: MatchScout(),
     );
   }
 }
